@@ -1,9 +1,6 @@
 package saulwebavanzada.demo.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
@@ -13,6 +10,7 @@ public class Factura {
     long id;
     @OneToMany
     private Collection<Equipo> equipos;
+    @ManyToOne
     private Alquiler alquiler;
     private float montoTotal;
 

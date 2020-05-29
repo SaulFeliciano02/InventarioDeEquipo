@@ -2,22 +2,23 @@ package saulwebavanzada.demo.entities;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Alquiler {
     @Id
     @GeneratedValue
     long id;
-    @OneToOne
-    private Equipo equipo;
+    @OneToMany
+    private List<CantidadEquipo> equipos;
     private Date fechaRealizacion;
     private Date fechaEntregaPrometida;
     @ManyToOne
     private Cliente miCliente;
     private Date fechaEntregaReal;
 
-    public Alquiler(Equipo equipo, Date fechaRealizacion, Date fechaEntregaPrometida, Cliente miCliente) {
-        this.equipo = equipo;
+    public Alquiler(List<CantidadEquipo> equipos, Date fechaRealizacion, Date fechaEntregaPrometida, Cliente miCliente) {
+        this.equipos = equipos;
         this.fechaRealizacion = fechaRealizacion;
         this.fechaEntregaPrometida = fechaEntregaPrometida;
         this.miCliente = miCliente;
@@ -27,12 +28,12 @@ public class Alquiler {
     public Alquiler() {
     }
 
-    public Equipo getEquipo() {
-        return equipo;
+    public List<CantidadEquipo> getEquipos() {
+        return equipos;
     }
 
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
+    public void setEquipo(List<CantidadEquipo> equipos) {
+        this.equipos = equipos;
     }
 
     public Date getFechaRealizacion() {
