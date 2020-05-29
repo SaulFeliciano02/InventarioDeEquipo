@@ -35,4 +35,8 @@ public class SubFamilia {
     public void setMiFamilia(Familia miFamilia) {
         this.miFamilia = miFamilia;
     }
+
+    public long getId() {
+        return id;
+    }
 }

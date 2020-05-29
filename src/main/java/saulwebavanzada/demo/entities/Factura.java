@@ -12,23 +12,37 @@ public class Factura {
     @GeneratedValue
     long id;
     @OneToMany
-    private Collection<Alquiler> misAlquileres;
+    private Collection<Equipo> equipos;
+    private Alquiler alquiler;
     private float montoTotal;
 
-    public Factura(Collection misAlquileres, float montoTotal) {
-        this.misAlquileres = misAlquileres;
+    public Factura(Collection equipos, Alquiler alquiler, float montoTotal) {
+        this.equipos = equipos;
+        this.alquiler = alquiler;
         this.montoTotal = montoTotal;
     }
 
     public Factura() {
     }
 
-    public Collection<Alquiler> getMisAlquileres() {
-        return misAlquileres;
+    public long getId() {
+        return id;
     }
 
-    public void setMisAlquileres(Collection<Alquiler> misAlquileres) {
-        this.misAlquileres = misAlquileres;
+    public Alquiler getAlquiler() {
+        return alquiler;
+    }
+
+    public Collection<Equipo> getEquipos() {
+        return equipos;
+    }
+
+    public void setAlquiler(Alquiler alquiler) {
+        this.alquiler = alquiler;
+    }
+
+    public void setEquipos(Collection<Equipo> equipos) {
+        this.equipos = equipos;
     }
 
     public float getMontoTotal() {

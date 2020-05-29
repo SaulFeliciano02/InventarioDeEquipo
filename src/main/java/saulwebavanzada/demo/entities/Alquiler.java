@@ -66,4 +66,8 @@ public class Alquiler {
     public void setFechaEntregaReal(Date fechaEntregaReal) {
         this.fechaEntregaReal = fechaEntregaReal;
     }
+
+    public long getId() {
+        return id;
+    }
 }

@@ -57,4 +57,8 @@ public class Cliente {
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
+
+    public long getId() {
+        return id;
+    }
 }

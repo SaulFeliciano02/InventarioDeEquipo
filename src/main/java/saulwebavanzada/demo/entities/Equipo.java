@@ -67,4 +67,8 @@ public class Equipo {
     public void setExistencia(int existencia) {
         this.existencia = existencia;
     }
+
+    public long getId() {
+        return id;
+    }
 }
