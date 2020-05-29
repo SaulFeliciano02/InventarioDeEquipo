@@ -1,11 +1,18 @@
 package saulwebavanzada.demo.entities;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Alquiler {
+    @Id
+    @GeneratedValue
+    long id;
+    @OneToOne
     private Equipo equipo;
     private Date fechaRealizacion;
     private Date fechaEntregaPrometida;
+    @ManyToOne
     private Cliente miCliente;
     private Date fechaEntregaReal;
 

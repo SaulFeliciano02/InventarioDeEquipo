@@ -1,12 +1,21 @@
 package saulwebavanzada.demo.entities;
 
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Collection;
 
+@Entity
 public class Factura {
-    private ArrayList<Alquiler> misAlquileres;
+    @Id
+    @GeneratedValue
+    long id;
+    @OneToMany
+    private Collection<Alquiler> misAlquileres;
     private float montoTotal;
 
-    public Factura(ArrayList<Alquiler> misAlquileres, float montoTotal) {
+    public Factura(Collection misAlquileres, float montoTotal) {
         this.misAlquileres = misAlquileres;
         this.montoTotal = montoTotal;
     }
@@ -14,11 +23,11 @@ public class Factura {
     public Factura() {
     }
 
-    public ArrayList<Alquiler> getMisAlquileres() {
+    public Collection<Alquiler> getMisAlquileres() {
         return misAlquileres;
     }
 
-    public void setMisAlquileres(ArrayList<Alquiler> misAlquileres) {
+    public void setMisAlquileres(Collection<Alquiler> misAlquileres) {
         this.misAlquileres = misAlquileres;
     }
 

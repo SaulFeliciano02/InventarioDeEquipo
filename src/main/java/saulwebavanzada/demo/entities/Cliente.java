@@ -2,13 +2,21 @@ package saulwebavanzada.demo.entities;
 
 import ij.ImagePlus;
 
+import javax.persistence.*;
+
+@Entity
 public class Cliente {
+    @Id @GeneratedValue long id;
+    @Column(length = 2000)
     private String nombre;
+    @Column(length = 2000)
     private String Apellido;
     private String cedula;
-    private ImagePlus imagen;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] imagen;
 
-    public Cliente(String nombre, String apellido, String cedula, ImagePlus imagen) {
+    public Cliente(String nombre, String apellido, String cedula, byte[] imagen) {
         this.nombre = nombre;
         Apellido = apellido;
         this.cedula = cedula;
@@ -42,11 +50,11 @@ public class Cliente {
         this.cedula = cedula;
     }
 
-    public ImagePlus getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(ImagePlus imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 }

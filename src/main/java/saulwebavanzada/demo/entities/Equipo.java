@@ -2,14 +2,22 @@ package saulwebavanzada.demo.entities;
 
 import ij.ImagePlus;
 
+import javax.persistence.*;
+
+@Entity
 public class Equipo {
+    @Id @GeneratedValue long id;
+    @Column(length = 2000)
     private String nombre;
     private float costoAlquiler;
+    @ManyToOne
     private SubFamilia miSubFamilia;
-    private ImagePlus imagen;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] imagen;
     private int existencia;
 
-    public Equipo(String nombre, float costoAlquiler, SubFamilia miSubFamilia, ImagePlus imagen, int existencia) {
+    public Equipo(String nombre, float costoAlquiler, SubFamilia miSubFamilia, byte[] imagen, int existencia) {
         this.nombre = nombre;
         this.costoAlquiler = costoAlquiler;
         this.miSubFamilia = miSubFamilia;
@@ -44,11 +52,11 @@ public class Equipo {
         this.miSubFamilia = miSubFamilia;
     }
 
-    public ImagePlus getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(ImagePlus imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 

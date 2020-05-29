@@ -1,7 +1,15 @@
 package saulwebavanzada.demo.entities;
 
+import javax.persistence.*;
+
+@Entity
 public class SubFamilia {
+    @Id
+    @GeneratedValue
+    long id;
+    @Column(length = 2000)
     private String nombre;
+    @ManyToOne
     private Familia miFamilia;
 
     public SubFamilia(String nombre, Familia miFamilia) {
