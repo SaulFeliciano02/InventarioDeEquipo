@@ -8,7 +8,7 @@ public class Factura {
     @Id
     @GeneratedValue
     long id;
-    @OneToMany
+    @OneToOne
     private Equipo equipo;
     @ManyToOne
     private Alquiler alquiler;

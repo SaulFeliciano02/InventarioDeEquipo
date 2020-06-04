@@ -30,6 +30,10 @@ dependencies {
     }
     // https://mvnrepository.com/artifact/net.imagej/ij
     compile group: 'net.imagej', name: 'ij', version: '1.49k'
+
+    //datatables
+    compile group: 'org.webjars', name: 'bootstrap', version: '4.0.0-2'
+
 }
 
 test {

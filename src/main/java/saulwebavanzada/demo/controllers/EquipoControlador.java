@@ -11,4 +11,18 @@ public class EquipoControlador {
         return "/thymeleaf/index";
     }
 
+    @RequestMapping(path = "/usuarios")
+    public String listarUsuarios(){
+        return "/thymeleaf/users";
+    }
+
+    @RequestMapping(path = "/inventario")
+    public String listarEquipos(){
+        return "/thymeleaf/inventory";
+    }
+
+    @RequestMapping(path = "/clientes")
+    public String listarClientes(){
+        return "/thymeleaf/clients";
+    }
 }
