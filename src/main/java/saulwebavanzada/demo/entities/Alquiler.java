@@ -2,19 +2,21 @@ package saulwebavanzada.demo.entities;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Alquiler {
     @Id
     @GeneratedValue
     long id;
-    @OneToOne
+    @OneToMany
     private Equipo equipo;
     private Date fechaRealizacion;
     private Date fechaEntregaPrometida;
     @ManyToOne
     private Cliente miCliente;
     private Date fechaEntregaReal;
+    private boolean pagado;
 
     public Alquiler(Equipo equipo, Date fechaRealizacion, Date fechaEntregaPrometida, Cliente miCliente) {
         this.equipo = equipo;
@@ -22,6 +24,7 @@ public class Alquiler {
         this.fechaEntregaPrometida = fechaEntregaPrometida;
         this.miCliente = miCliente;
         this.fechaEntregaReal = null;
+        this.pagado = false;
     }
 
     public Alquiler() {
@@ -69,5 +72,13 @@ public class Alquiler {
 
     public long getId() {
         return id;
+    }
+
+    public boolean isPagado() {
+        return pagado;
+    }
+
+    public void setPagado(boolean pagado) {
+        this.pagado = pagado;
     }
 }

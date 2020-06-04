@@ -8,14 +8,14 @@ public class Factura {
     @Id
     @GeneratedValue
     long id;
-    @OneToMany
-    private Collection<Equipo> equipos;
     @OneToOne
+    private Equipo equipo;
+    @ManyToOne
     private Alquiler alquiler;
     private float montoTotal;
 
-    public Factura(Collection equipos, Alquiler alquiler, float montoTotal) {
-        this.equipos = equipos;
+    public Factura(Equipo equipo, Alquiler alquiler, float montoTotal) {
+        this.equipo = equipo;
         this.alquiler = alquiler;
         this.montoTotal = montoTotal;
     }
@@ -31,16 +31,16 @@ public class Factura {
         return alquiler;
     }
 
-    public Collection<Equipo> getEquipos() {
-        return equipos;
+    public Equipo getEquipo() {
+        return equipo;
     }
 
     public void setAlquiler(Alquiler alquiler) {
         this.alquiler = alquiler;
     }
 
-    public void setEquipos(Collection<Equipo> equipos) {
-        this.equipos = equipos;
+    public void setEquipo(Equipo equipo) {
+        this.equipo = equipo;
     }
 
     public float getMontoTotal() {

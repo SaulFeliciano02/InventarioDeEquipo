@@ -3,6 +3,7 @@ package saulwebavanzada.demo.entities;
 import ij.ImagePlus;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Cliente {
@@ -12,14 +13,17 @@ public class Cliente {
     @Column(length = 2000)
     private String Apellido;
     private String cedula;
+    @OneToMany
+    private List<Alquiler> alquileres;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] imagen;
 
-    public Cliente(String nombre, String apellido, String cedula, byte[] imagen) {
+    public Cliente(String nombre, String apellido, String cedula, List<Alquiler> alquileres, byte[] imagen) {
         this.nombre = nombre;
         Apellido = apellido;
         this.cedula = cedula;
+        this.alquileres = alquileres;
         this.imagen = imagen;
     }
 
@@ -60,5 +64,13 @@ public class Cliente {
 
     public long getId() {
         return id;
+    }
+
+    public List<Alquiler> getAlquileres() {
+        return alquileres;
+    }
+
+    public void setAlquileres(List<Alquiler> alquileres) {
+        this.alquileres = alquileres;
     }
 }
