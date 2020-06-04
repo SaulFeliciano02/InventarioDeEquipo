@@ -10,30 +10,32 @@ public class Alquiler {
     @GeneratedValue
     long id;
     @OneToMany
-    private List<CantidadEquipo> equipos;
+    private Equipo equipo;
     private Date fechaRealizacion;
     private Date fechaEntregaPrometida;
     @ManyToOne
     private Cliente miCliente;
     private Date fechaEntregaReal;
+    private boolean pagado;
 
-    public Alquiler(List<CantidadEquipo> equipos, Date fechaRealizacion, Date fechaEntregaPrometida, Cliente miCliente) {
-        this.equipos = equipos;
+    public Alquiler(Equipo equipo, Date fechaRealizacion, Date fechaEntregaPrometida, Cliente miCliente) {
+        this.equipo = equipo;
         this.fechaRealizacion = fechaRealizacion;
         this.fechaEntregaPrometida = fechaEntregaPrometida;
         this.miCliente = miCliente;
         this.fechaEntregaReal = null;
+        this.pagado = false;
     }
 
     public Alquiler() {
     }
 
-    public List<CantidadEquipo> getEquipos() {
-        return equipos;
+    public Equipo getEquipo() {
+        return equipo;
     }
 
-    public void setEquipo(List<CantidadEquipo> equipos) {
-        this.equipos = equipos;
+    public void setEquipo(Equipo equipo) {
+        this.equipo = equipo;
     }
 
     public Date getFechaRealizacion() {
@@ -70,5 +72,13 @@ public class Alquiler {
 
     public long getId() {
         return id;
+    }
+
+    public boolean isPagado() {
+        return pagado;
+    }
+
+    public void setPagado(boolean pagado) {
+        this.pagado = pagado;
     }
 }
