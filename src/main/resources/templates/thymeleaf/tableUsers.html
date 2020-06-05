@@ -265,19 +265,19 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="estudiante : ${listaEstudiantes}">
+            <th:block th:each="usuario : ${listaUsuarios}">
                 <tr>
                     <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" th:id="'checkbox' + ${estudiante.matricula}" name="options[]" value="1">
-                            <label th:for="'checkbox' + ${estudiante.matricula}"></label>
+                            <input type="checkbox" th:id="'checkbox' + ${usuario.id}" name="options[]" value="1">
+                            <label th:for="'checkbox' + ${usuario.id}"></label>
                         </span>
                     </td>
-                    <td th:text = "${estudiante.nombre}" th:id="${estudiante.nombre}"></td>
-                    <td th:text = "${estudiante.apellido}"></td>
+                    <td th:text = "${usuario.username}" th:id="${usuario.username}"></td>
+                    <td th:text = "${usuario.role}"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${estudiante.matricula} + '-' + ${estudiante.nombre} + '-' + ${estudiante.apellido} + '-' + ${estudiante.telefono}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${estudiante.matricula}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${usuario.username} + '-' + ${usuario.password} + '-' + ${usuario.role}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${usuario.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
             </th:block>
@@ -301,7 +301,7 @@
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/crear">
+            <form role="form" method="post" action="/usuarios/crear/">
                 <div class="modal-header">
                     <h4 class="modal-title">Añadir Usuario</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -309,7 +309,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <input type="text" name="username" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Contraseña</label>
@@ -317,7 +317,7 @@
                     </div>
                     <div class="form-group">
                         <label>Rol
-                            <select required>
+                            <select name="role" required>
                                 <option>-Elegir rol-</option>
                             </select>
                         </label>
@@ -335,7 +335,7 @@
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/editar">
+            <form role="form" method="post" action="/usuarios/editar">
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Usuario</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -386,23 +386,19 @@
         </div>
     </div>
 </div>
-</body>
-</html>
 
 <script type="text/javascript">
     function edit_clicked(id) {
         var data = id.split("-");
         var iterator = data.values();
-        console.log(id)
-        console.log(data);
-        console.log(iterator);
-        document.getElementById("matriculaEdit").value = iterator.next().value;
         document.getElementById("nombreEdit").value = iterator.next().value;
-        document.getElementById("apellidoEdit").value = iterator.next().value;
-        document.getElementById("telefonoEdit").value = iterator.next().value;
+        document.getElementById("passEdit").value = iterator.next().value;
+        document.getElementById("rolEdit").value = iterator.next().value;
     }
 
     function delete_clicked(id) {
-        document.getElementById("delete_form").setAttribute("action", "/eliminar/" + id);
+        document.getElementById("delete_form").setAttribute("action", "/usuarios/eliminar/" + id);
     }
 </script>
+</body>
+</html>

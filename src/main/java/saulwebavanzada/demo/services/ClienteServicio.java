@@ -1,18 +1,24 @@
 package saulwebavanzada.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Cliente;
 import saulwebavanzada.demo.repositories.ClienteRepositorio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ClienteServicio {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
 
     public List<Cliente> getClientes(){
+        if(clienteRepositorio.findAll() == null){
+            return new ArrayList<>();
+        }
         return clienteRepositorio.findAll();
     }
 
@@ -48,8 +54,8 @@ public class ClienteServicio {
     }
 
     @Transactional
-    public boolean editarCliente(Cliente cliente){
-        Optional<Cliente> e = Optional.ofNullable(clienteRepositorio.findById(cliente.getId()));
+    public boolean editarCliente(Cliente cliente, long id){
+        Optional<Cliente> e = Optional.ofNullable(clienteRepositorio.findById(id));
         if(e.isPresent()){
             Cliente nuevoCliente = e.get();
             nuevoCliente.setApellido(cliente.getApellido());

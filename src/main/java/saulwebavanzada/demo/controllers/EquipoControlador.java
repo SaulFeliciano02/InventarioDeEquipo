@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class EquipoControlador {
 
-    @RequestMapping(path = "/")
+    /**@RequestMapping(path = "/")
     public String login(){
         return "/thymeleaf/index";
     }
@@ -39,5 +39,5 @@ public class EquipoControlador {
     @RequestMapping(path = "/facturas")
     public String listarFacturas(){
         return "/thymeleaf/invoices";
-    }
+    }**/
 }

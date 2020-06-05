@@ -1,6 +1,8 @@
 package saulwebavanzada.demo.services;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Equipo;
 import saulwebavanzada.demo.entities.Usuario;
@@ -9,7 +11,8 @@ import saulwebavanzada.demo.repositories.UsuarioRepositorio;
 import java.util.List;
 import java.util.Optional;
 
-public class UsuarioServices {
+@Service
+public class UsuarioServicio {
 
     @Autowired
     public UsuarioRepositorio usuarioRepositorio;
@@ -23,6 +26,7 @@ public class UsuarioServices {
         if(usuarioRepositorio.findById(usuario.getId()) != null){
             return false;
         }
+        usuario.setPassword(DigestUtils.md5Hex(usuario.getPassword()));
         usuarioRepositorio.save(usuario);
         return true;
     }

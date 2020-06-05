@@ -33,6 +33,9 @@ dependencies {
 
     //datatables
     compile group: 'org.webjars', name: 'bootstrap', version: '4.0.0-2'
+    
+    //Encriptacion
+    compile(group: 'commons-codec', name: 'commons-codec', version: '1.11')
 
 }
 

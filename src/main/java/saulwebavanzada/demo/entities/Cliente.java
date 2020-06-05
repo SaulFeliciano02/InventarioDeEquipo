@@ -17,6 +17,7 @@ public class Cliente {
     private List<Alquiler> alquileres;
     @Lob
     @Basic(fetch = FetchType.LAZY)
+    @Column(nullable = true)
     private byte[] imagen;
 
     public Cliente(String nombre, String apellido, String cedula, List<Alquiler> alquileres, byte[] imagen) {
@@ -72,5 +73,9 @@ public class Cliente {
 
     public void setAlquileres(List<Alquiler> alquileres) {
         this.alquileres = alquileres;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
