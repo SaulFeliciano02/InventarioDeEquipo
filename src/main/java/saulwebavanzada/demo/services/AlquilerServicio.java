@@ -1,6 +1,7 @@
 package saulwebavanzada.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Alquiler;
 import saulwebavanzada.demo.entities.Usuario;
@@ -9,12 +10,17 @@ import saulwebavanzada.demo.repositories.AlquilerRepositorio;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AlquilerServicio {
     @Autowired
     public AlquilerRepositorio alquilerRepositorio;
 
     public List<Alquiler> getAlquileres(){
         return alquilerRepositorio.findAll();
+    }
+
+    public Alquiler getAlquilerById(long id){
+        return alquilerRepositorio.findById(id);
     }
 
     @Transactional

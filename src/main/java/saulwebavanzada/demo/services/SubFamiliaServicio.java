@@ -1,6 +1,7 @@
 package saulwebavanzada.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Cliente;
 import saulwebavanzada.demo.entities.SubFamilia;
@@ -9,6 +10,7 @@ import saulwebavanzada.demo.repositories.SubFamiliaRepositorio;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class SubFamiliaServicio {
     @Autowired
     private SubFamiliaRepositorio subFamiliaRepositorio;

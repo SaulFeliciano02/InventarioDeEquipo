@@ -10,7 +10,7 @@ public class Factura {
     long id;
     @OneToOne
     private Equipo equipo;
-    @ManyToOne
+    @OneToOne
     private Alquiler alquiler;
     private float montoTotal;
 

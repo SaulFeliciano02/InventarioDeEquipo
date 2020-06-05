@@ -1,16 +1,23 @@
 package saulwebavanzada.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Alquiler;
 import saulwebavanzada.demo.entities.Factura;
 import saulwebavanzada.demo.repositories.FacturaRepositorio;
 
+import java.util.List;
 import java.util.Optional;
 
+@Service
 public class FacturaServicio {
     @Autowired
     public FacturaRepositorio facturaRepositorio;
+
+    public List<Factura> getFacturas(){
+        return facturaRepositorio.findAll();
+    }
 
     @Transactional
     public boolean crearFactura(Factura factura){

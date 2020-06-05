@@ -267,18 +267,22 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="estudiante : ${listaEstudiantes}">
+            <th:block th:each="alquiler : ${listaAlquileres}">
                 <tr>
                     <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" th:id="'checkbox' + ${estudiante.matricula}" name="options[]" value="1">
-                            <label th:for="'checkbox' + ${estudiante.matricula}"></label>
+                            <input type="checkbox" th:id="'checkbox' + ${alquiler.id}" name="options[]" value="1">
+                            <label th:for="'checkbox' + ${alquiler.id}"></label>
                         </span>
                     </td>
-                    <td th:text = "${estudiante.nombre}" th:id="${estudiante.nombre}"></td>
-                    <td th:text = "${estudiante.apellido}"></td>
+                    <td th:text = "${alquiler.id}" th:id="${estudiante.nombre}"></td>
+                    <td th:text = "${alquiler.equipo.nombre}"></td>
+                    <td th:text = "${alquiler.fechaRealizacion}"></td>
+                    <td th:text = "${alquiler.fechaEntregaPrometida}"></td>
+                    <td th:text = "${alquiler.cliente.nombre}"></td>
+                    <td th:text = "${alquiler.pagado} ? 'Si' : 'No'"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${estudiante.matricula} + '-' + ${estudiante.nombre} + '-' + ${estudiante.apellido} + '-' + ${estudiante.telefono}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${alquiler.id} + '-' + ${alquiler.equipo.nombre} + '-' + ${alquiler.fechaRealizacion} +  '-' + ${alquiler.cliente.id} + '-' + ${alquiler.cliente.nombre} + '-' + ${alquiler.pagado} + '-' + ${alquiler.equipo.costoAlquiler}" onclick="new_factura(this.id)">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${estudiante.matricula}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
@@ -303,7 +307,7 @@
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/">
+            <form role="form" method="post" action="/alquiler/crear">
                 <div class="modal-header">
                     <h4 class="modal-title">Añadir Alquiler</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -315,19 +319,21 @@
                     </div>
                     <div class="form-group">
                         <label>Cantidad</label>
-                        <input type="number" name="nombre" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Fecha Realizacion</label>
-                        <input type="text" value="" id="dateinit" name="nombre" class="form-control" required disabled>
+                        <input type="number" name="cantidad" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Fecha Prometida de Entrega</label>
-                        <input type="date" name="nombre" class="form-control" required>
+                        <input type="date" name="fechaPrometida" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Cliente</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <label>Cliente
+                            <select name="cliente" required>
+                                <option>-Elegir Cliente-</option>
+                                <th:block th:each="cliente : ${listaClientes}">
+                                    <option th:text = "${cliente.id} + '-' ${cliente.nombre} + ' ' + ${cliente.apellido}"></option>
+                                </th:block>
+                            </select>
+                        </label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -343,7 +349,7 @@
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/editar">
+            <form role="form" method="post" action="/alquiler/crearFactura">
                 <div class="modal-header">
                     <h4 class="modal-title">Facturacion</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -351,27 +357,27 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Cliente</label>
-                        <input type="text" name="nombre" class="form-control" required disabled>
+                        <input type="text" name="nombreCliente" id="nombreClienteId" class="form-control" required readonly>
                     </div>
                     <div class="form-group">
-                        <label>Alquiler</label>
-                        <input type="text" name="nombre" class="form-control" required disabled>
+                        <label>Alquiler ID</label>
+                        <input type="text" name="nombreAlquiler" id="nombreAlquilerId" class="form-control" required readonly>
                     </div>
                     <div class="form-group">
                         <label>Equipo</label>
-                        <input type="text" name="nombre" class="form-control" required disabled>
+                        <input type="text" name="nombreEquipo" id="nombreEquipoId" class="form-control" required readonly>
                     </div>
                     <div class="form-group">
                         <label>Monto a pagar</label>
-                        <input type="number" step="0.01" name="nombre" class="form-control" required disabled>
+                        <input type="number" step="0.01" name="montoPagar" id="montoPagarId" class="form-control" required readonly>
                     </div>
                     <div class="form-group">
                         <label>Fecha de Alquilado</label>
-                        <input type="text" name="nombre" class="form-control" required disabled>
+                        <input type="date" name="fechaAlquilado" id="fechaAlquiladoId" class="form-control" required readonly>
                     </div>
                     <div class="form-group">
                         <label>Fecha de entrega</label>
-                        <input type="text" name="nombre" class="form-control" required disabled>
+                        <input type="text" name="fechaEntrega" id="fechaEntregaId" class="form-control" required readonly>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -406,20 +412,32 @@
 </body>
 
 <script type="text/javascript">
-    function edit_clicked(id) {
+    function new_factura(id) {
         var data = id.split("-");
         var iterator = data.values();
-        console.log(id)
-        console.log(data);
-        console.log(iterator);
-        document.getElementById("matriculaEdit").value = iterator.next().value;
-        document.getElementById("nombreEdit").value = iterator.next().value;
-        document.getElementById("apellidoEdit").value = iterator.next().value;
-        document.getElementById("telefonoEdit").value = iterator.next().value;
+
+        var nombreEquipoId = iterator.next().value + "-" + iterator.next().value;
+        var fechaAlquiladoId = date(iterator.next().value);
+        var nombreClienteId = iterator.next().value + "-" + iterator.next().value;
+        var nombreAlquilerId = iterator.next().value;
+
+        document.getElementById("nombreEquipoId").value = nombreEquipoId;
+        document.getElementById("fechaAlquiladoId").value = fechaAlquiladoId;
+        document.getElementById("nombreClienteId").value =  nombreClienteId;
+        document.getElementById("nombreAlquilerId").value = nombreAlquilerId;
+
+        var montoAlquiler = iterator.next().value;
+        var current_date = new Date();
+        var Difference_In_Time = current_date - fechaAlquiladoId.getTime();
+        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        var montoPagar = Difference_In_Days * montoAlquiler;
+
+        document.getElementById("montoPagarId").value = montoPagar;
+        document.getElementById("fechaEntregaId").value = current_date;
     }
 
     function delete_clicked(id) {
-        document.getElementById("delete_form").setAttribute("action", "/eliminar/" + id);
+        document.getElementById("delete_form").setAttribute("action", "/alquiler/eliminar/" + id);
     }
 
 </script>

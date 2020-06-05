@@ -246,6 +246,8 @@
                 <div class="col-sm-6">
                     <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Equipo</span></a>
                     <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
+                    <a href="#addSubFamilyModal" class="btn btn-info" data-toggle="modal"><i class="material-icons">&#xE3F2;</i><span>Agregar Sub-Familia</span></a>
+                    <a href="#addFamilyModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#xE3F1;</i><span>Agregar Familia</span></a>
                 </div>
             </div>
         </div>
@@ -267,19 +269,23 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="estudiante : ${listaEstudiantes}">
+            <th:block th:each="equipo : ${listaEquipos}">
                 <tr>
                     <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" th:id="'checkbox' + ${estudiante.matricula}" name="options[]" value="1">
-                            <label th:for="'checkbox' + ${estudiante.matricula}"></label>
+                            <input type="checkbox" th:id="'checkbox' + ${equipo.id}" name="options[]" value="1">
+                            <label th:for="'checkbox' + ${equipo.id}"></label>
                         </span>
                     </td>
-                    <td th:text = "${estudiante.nombre}" th:id="${estudiante.nombre}"></td>
-                    <td th:text = "${estudiante.apellido}"></td>
+                    <td th:text = "${equipo.id}" th:id="${equipo.id}"></td>
+                    <td th:text = "${equipo.nombre}"></td>
+                    <td th:text = "${equipo.costoAquiler}"></td>
+                    <td th:text = "${equipo.miSubFamilia.nombre}"></td>
+                    <td th:text = "${equipo.existencia}"></td>
+                    <td th:text = "${equipo.imagen}"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${estudiante.matricula} + '-' + ${estudiante.nombre} + '-' + ${estudiante.apellido} + '-' + ${estudiante.telefono}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${estudiante.matricula}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${equipo.id} + '-' + ${equipo.nombre} + '-' + ${equipo.costoAlquiler} + '-' + ${equipo.miSubFamilia.nombre} + '-' + ${equipo.existencia} + '-' + ${equipo.imagen}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${equipo.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
             </th:block>
@@ -315,22 +321,25 @@
                     </div>
                     <div class="form-group">
                         <label>Costo Alquiler</label>
-                        <input type="number" name="nombre" class="form-control" required>
+                        <input type="number" name="costoAlquiler" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Sub-Familia
-                            <select required>
+                            <select name="subFamilia" required>
                                 <option>-Elegir Sub-Familia-</option>
+                                <th:block th:each="subFamilia : ${listaSubFamilias}">
+                                    <option th:text = "${subFamilia.nombre}"></option>
+                                </th:block>
                             </select>
                         </label>
                     </div>
                     <div class="form-group">
                         <label>Existencia</label>
-                        <input type="number" name="nombre" class="form-control" required>
+                        <input type="number" name="existencia" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Imagen</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <input type="file" name="imagen" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -345,7 +354,7 @@
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/editar">
+            <form role="form" method="post" action="/equipos/editar">
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Equipo</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -353,26 +362,29 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <input type="text" name="nombre" id="nombreId" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Costo Alquiler</label>
-                        <input type="number" name="nombre" class="form-control" required>
+                        <input type="number" name="costoAlquiler" id="costoAlquilerId" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Sub-Familia
-                            <select required>
+                            <select name="subFamilia" id="subFamiliaId" required>
                                 <option>-Elegir Sub-Familia-</option>
+                                <th:block th:each="subFamilia : ${listaSubFamilias}">
+                                    <option th:text = "${subFamilia.nombre}"></option>
+                                </th:block>
                             </select>
                         </label>
                     </div>
                     <div class="form-group">
                         <label>Existencia</label>
-                        <input type="number" name="nombre" class="form-control" required>
+                        <input type="number" name="existencia" id="existenciaId" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Imagen</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <input type="file" name="imagen" id="imagenId" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -410,17 +422,15 @@
     function edit_clicked(id) {
         var data = id.split("-");
         var iterator = data.values();
-        console.log(id)
-        console.log(data);
-        console.log(iterator);
-        document.getElementById("matriculaEdit").value = iterator.next().value;
         document.getElementById("nombreEdit").value = iterator.next().value;
-        document.getElementById("apellidoEdit").value = iterator.next().value;
-        document.getElementById("telefonoEdit").value = iterator.next().value;
+        document.getElementById("costoAlquilerId").value = iterator.next().value;
+        document.getElementById("subFamiliaId").value = iterator.next().value;
+        document.getElementById("existenciaId").value = iterator.next().value;
+        document.getElementById("imagenId").value = iterator.next().value;
     }
 
     function delete_clicked(id) {
-        document.getElementById("delete_form").setAttribute("action", "/eliminar/" + id);
+        document.getElementById("delete_form").setAttribute("action", "/equipos/eliminar/" + id);
     }
 </script>
 </html>
