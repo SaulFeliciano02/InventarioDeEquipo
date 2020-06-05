@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EquipoControlador {
 
     @RequestMapping(path = "/")
-    public String listarEstudiantes(){
+    public String login(){
         return "/thymeleaf/index";
+    }
+
+    @RequestMapping(path = "/home")
+    public String home(){
+        return "/thymeleaf/home";
     }
 
     @RequestMapping(path = "/usuarios")
@@ -24,5 +29,15 @@ public class EquipoControlador {
     @RequestMapping(path = "/clientes")
     public String listarClientes(){
         return "/thymeleaf/clients";
+    }
+
+    @RequestMapping(path = "/alquiler")
+    public String listarAlquiler(){
+        return "/thymeleaf/rental";
+    }
+
+    @RequestMapping(path = "/facturas")
+    public String listarFacturas(){
+        return "/thymeleaf/invoices";
     }
 }
