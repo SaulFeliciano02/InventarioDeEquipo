@@ -241,13 +241,11 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Administrar <b>Equipos</b></h2>
+                    <h2>Administrar <b>Sub-Familias</b></h2>
                 </div>
                 <div class="col-sm-6">
-                    <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Equipo</span></a>
-                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
-                    <a href="#addSubFamilyModal" class="btn btn-info" data-toggle="modal"><i class="material-icons">&#xE3F2;</i><span>Agregar Sub-Familia</span></a>
-                    <a href="#addFamilyModal" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#xE3F1;</i><span>Agregar Familia</span></a>
+                    <a href="#addSubModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Sub-Familia</span></a>
+                    <a href="#deleteSubModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
                 </div>
             </div>
         </div>
@@ -262,10 +260,7 @@
                 </th>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Costo Alquiler</th>
-                <th>Sub-Familia</th>
-                <th>Existencia</th>
-                <th>Imagen</th>
+                <th>Familia</th>
             </tr>
             </thead>
             <tbody>
@@ -302,53 +297,10 @@
     </div>
 </div>
 <!-- Add Modal HTML -->
-<div id="addEmployeeModal" class="modal fade">
+<div id="addSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form role="form" method="post" action="/crear">
-                <div class="modal-header">
-                    <h4 class="modal-title">Añadir Equipo</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Costo Alquiler</label>
-                        <input type="number" name="nombre" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Sub-Familia
-                            <select required>
-                                <option>-Elegir Sub-Familia-</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Existencia</label>
-                        <input type="number" name="nombre" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Imagen</label>
-                        <input type="text" name="nombre" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                    <input type="submit" class="btn btn-success" value="Añadir">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Add SubFamily Modal HTML -->
-<div id="addSubFamilyModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form role="form" method="post" action="/clientes/crear/">
                 <div class="modal-header">
                     <h4 class="modal-title">Añadir Sub-Familia de Equipos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -374,38 +326,13 @@
         </div>
     </div>
 </div>
-
-<!-- Add Family Modal HTML -->
-<div id="addFamilyModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form role="form" method="post" action="/clientes/crear/">
-                <div class="modal-header">
-                    <h4 class="modal-title">Añadir Familia de Equipos</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                    <input type="submit" class="btn btn-success" value="Añadir">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
+<div id="editSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form role="form" method="post" action="/editar">
                 <div class="modal-header">
-                    <h4 class="modal-title">Editar Equipo</h4>
+                    <h4 class="modal-title">Editar Sub-Familia de Equipos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -414,23 +341,11 @@
                         <input type="text" name="nombre" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Costo Alquiler</label>
-                        <input type="number" name="nombre" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Sub-Familia
+                        <label>Familia
                             <select required>
-                                <option>-Elegir Sub-Familia-</option>
+                                <option>-Selecciona una Familia-</option>
                             </select>
                         </label>
-                    </div>
-                    <div class="form-group">
-                        <label>Existencia</label>
-                        <input type="number" name="nombre" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Imagen</label>
-                        <input type="text" name="nombre" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -442,12 +357,12 @@
     </div>
 </div>
 <!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
+<div id="deleteSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="delete_form">
                 <div class="modal-header">
-                    <h4 class="modal-title">Eliminar Equipo</h4>
+                    <h4 class="modal-title">Eliminar Sub-Familia</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -462,7 +377,6 @@
         </div>
     </div>
 </div>
-</body>
 
 <script type="text/javascript">
     function edit_clicked(id) {
@@ -481,4 +395,6 @@
         document.getElementById("delete_form").setAttribute("action", "/eliminar/" + id);
     }
 </script>
+</body>
+
 </html>
