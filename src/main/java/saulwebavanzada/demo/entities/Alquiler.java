@@ -9,7 +9,7 @@ public class Alquiler {
     @Id
     @GeneratedValue
     long id;
-    @OneToMany
+    @OneToOne
     private Equipo equipo;
     private Date fechaRealizacion;
     private Date fechaEntregaPrometida;

@@ -22,8 +22,8 @@
 </head>
 
 <body>
-    <nav th:replace="thymeleaf/index :: navigation"></nav>
-    <header th:replace="thymeleaf/index :: header"></header>
+    <nav th:replace="thymeleaf/navbarForOtherTemplatesBesidesIndex :: navigation"></nav>
+    <header th:replace="thymeleaf/home :: header"></header>
     <div th:insert="thymeleaf/tableUsers :: body"></div>
 
     <!-- Bootstrap core JavaScript -->
