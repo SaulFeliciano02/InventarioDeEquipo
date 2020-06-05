@@ -235,18 +235,17 @@
         }
     </style>
 </head>
-
 <body th:fragment="body2">
 <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Administrar <b>Cliente</b></h2>
+                    <h2>Administrar <b>Sub-Familias</b></h2>
                 </div>
-                <div class="col-sm-10">
-                    <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Cliente</span></a>
-                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
+                <div class="col-sm-6">
+                    <a href="#addSubModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Sub-Familia</span></a>
+                    <a href="#deleteSubModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>
                 </div>
             </div>
         </div>
@@ -261,28 +260,23 @@
                 </th>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Cedula</th>
-                <th>Imagen</th>
+                <th>Familia</th>
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="cliente : ${listaClientes}">
+            <th:block th:each="estudiante : ${listaEstudiantes}">
                 <tr>
                     <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" th:id="'checkbox' + ${cliente.id}" name="options[]" value="1">
-                            <label th:for="'checkbox' + ${cliente.id}"></label>
+                            <input type="checkbox" th:id="'checkbox' + ${estudiante.matricula}" name="options[]" value="1">
+                            <label th:for="'checkbox' + ${estudiante.matricula}"></label>
                         </span>
                     </td>
-                    <td th:text = "${cliente.id}" th:id="${cliente.id}"></td>
-                    <td th:text = "${cliente.nombre}"></td>
-                    <td th:text = "${cliente.apellido}"></td>
-                    <td th:text = "${cliente.cedula}"></td>
-                    <td th:text = "${cliente.imagen}"></td>
+                    <td th:text = "${estudiante.nombre}" th:id="${estudiante.nombre}"></td>
+                    <td th:text = "${estudiante.apellido}"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${cliente.id} + '-' + ${cliente.nombre} + '-' + ${cliente.apellido} + '-' + ${cliente.cedula} + '-' + ${cliente.imagen}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${cliente.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${estudiante.matricula} + '-' + ${estudiante.nombre} + '-' + ${estudiante.apellido} + '-' + ${estudiante.telefono}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${estudiante.matricula}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
             </th:block>
@@ -303,12 +297,12 @@
     </div>
 </div>
 <!-- Add Modal HTML -->
-<div id="addEmployeeModal" class="modal fade">
+<div id="addSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/clientes/crear/">
+            <form role="form" method="post" action="/crear">
                 <div class="modal-header">
-                    <h4 class="modal-title">Añadir Cliente</h4>
+                    <h4 class="modal-title">Añadir Sub-Familia de Equipos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -317,16 +311,11 @@
                         <input type="text" name="nombre" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Apellido</label>
-                        <input type="text" name="apellido" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Cedula</label>
-                        <input type="number" name="cedula" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Imagen</label>
-                        <input type="file" name="imagen" id="imageId" class="form-control">
+                        <label>Familia
+                            <select required>
+                                <option>-Selecciona una Familia-</option>
+                            </select>
+                        </label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -337,56 +326,43 @@
         </div>
     </div>
 </div>
-
 <!-- Edit Modal HTML -->
-<div id="editEmployeeModal" class="modal fade">
+<div id="editSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/clientes/editar">
+            <form role="form" method="post" action="/editar">
                 <div class="modal-header">
-                    <h4 class="modal-title">Editar Cliente</h4>
+                    <h4 class="modal-title">Editar Sub-Familia de Equipos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" name="id" id="idEdit" class="form-control" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label>Nombre</label>
-                            <input type="text" name="nombre" id="nombreEdit" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Apellido</label>
-                            <input type="text" name="apellido" id="apellidoEdit" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Cedula</label>
-                            <input type="number" name="cedula" id="cedulaEdit" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Imagen</label>
-                            <input type="file" name="imagen" class="form-control">
-                        </div>
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" name="nombre" class="form-control" required>
                     </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                        <input type="submit" class="btn btn-info" value="Guardar">
+                    <div class="form-group">
+                        <label>Familia
+                            <select required>
+                                <option>-Selecciona una Familia-</option>
+                            </select>
+                        </label>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                    <input type="submit" class="btn btn-info" value="Guardar">
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 <!-- Delete Modal HTML -->
-<div id="deleteEmployeeModal" class="modal fade">
+<div id="deleteSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" id="delete_form">
                 <div class="modal-header">
-                    <h4 class="modal-title">Eliminar Cliente</h4>
+                    <h4 class="modal-title">Eliminar Sub-Familia</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -406,18 +382,19 @@
     function edit_clicked(id) {
         var data = id.split("-");
         var iterator = data.values();
-        document.getElementById("idEdit").value = iterator.next().value;
+        console.log(id)
+        console.log(data);
+        console.log(iterator);
+        document.getElementById("matriculaEdit").value = iterator.next().value;
         document.getElementById("nombreEdit").value = iterator.next().value;
         document.getElementById("apellidoEdit").value = iterator.next().value;
-        document.getElementById("cedulaEdit").value = iterator.next().value;
-        document.getElementById("imagenEdit").value = iterator.next().value;
+        document.getElementById("telefonoEdit").value = iterator.next().value;
     }
 
     function delete_clicked(id) {
-        document.getElementById("delete_form").setAttribute("action", "/clientes/eliminar/" + id);
+        document.getElementById("delete_form").setAttribute("action", "/eliminar/" + id);
     }
 </script>
 </body>
-
 
 </html>

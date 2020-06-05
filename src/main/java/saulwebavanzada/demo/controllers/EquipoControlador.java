@@ -60,38 +60,43 @@ public class EquipoControlador {
         return "redirect:/equipos";
     }
 
-    /**@RequestMapping(path = "/")
-    public String login(){
-        return "/thymeleaf/index";
-    }
-
-    @RequestMapping(path = "/home")
-    public String home(){
-        return "/thymeleaf/home";
-    }
-
-    @RequestMapping(path = "/usuarios")
-    public String listarUsuarios(){
-        return "/thymeleaf/users";
-    }
-
-    @RequestMapping(path = "/inventario")
-    public String listarEquipos(){
-        return "/thymeleaf/inventory";
-    }
-
-    @RequestMapping(path = "/clientes")
-    public String listarClientes(){
-        return "/thymeleaf/clients";
-    }
-
-    @RequestMapping(path = "/alquiler")
-    public String listarAlquiler(){
-        return "/thymeleaf/rental";
-    }
-
-    @RequestMapping(path = "/facturas")
-    public String listarFacturas(){
-        return "/thymeleaf/invoices";
-    }**/
+//    @RequestMapping(path = "/")
+//    public String login(){
+//        return "/thymeleaf/index";
+//    }
+//
+//    @RequestMapping(path = "/home")
+//    public String home(){
+//        return "/thymeleaf/home";
+//    }
+//
+//    @RequestMapping(path = "/usuarios")
+//    public String listarUsuarios(){
+//        return "/thymeleaf/users";
+//    }
+//
+//    @RequestMapping(path = "/inventario")
+//    public String listarEquipos(){
+//        return "/thymeleaf/inventory";
+//    }
+//
+//    @RequestMapping(path = "/clientes")
+//    public String listarClientes(){
+//        return "/thymeleaf/clients";
+//    }
+//
+//    @RequestMapping(path = "/alquiler")
+//    public String listarAlquiler(){
+//        return "/thymeleaf/rental";
+//    }
+//
+//    @RequestMapping(path = "/facturas")
+//    public String listarFacturas(){
+//        return "/thymeleaf/invoices";
+//    }
+//
+//    @RequestMapping(path = "/familias")
+//    public String listarFamilias(){
+//        return "/thymeleaf/familyAndSub";
+//    }
 }
