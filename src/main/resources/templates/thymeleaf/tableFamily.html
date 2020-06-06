@@ -263,19 +263,19 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="estudiante : ${listaEstudiantes}">
+            <th:block th:each="familia : ${listaFamilias}">
                 <tr>
                     <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" th:id="'checkbox' + ${estudiante.matricula}" name="options[]" value="1">
-                            <label th:for="'checkbox' + ${estudiante.matricula}"></label>
+                            <input type="checkbox" th:id="'checkbox' + ${familia.id}" name="options[]" value="1">
+                            <label th:for="'checkbox' + ${familia.id}"></label>
                         </span>
                     </td>
-                    <td th:text = "${estudiante.nombre}" th:id="${estudiante.nombre}"></td>
-                    <td th:text = "${estudiante.apellido}"></td>
+                    <td th:text = "${familia.id}" th:id="${familia.id}"></td>
+                    <td th:text = "${familia.nombre}"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${estudiante.matricula} + '-' + ${estudiante.nombre} + '-' + ${estudiante.apellido} + '-' + ${estudiante.telefono}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${estudiante.matricula}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${familia.id} + '-' + ${familia.nombre}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${familia.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
             </th:block>
@@ -299,7 +299,7 @@
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/crear">
+            <form role="form" method="post" action="/familia/crearFamilia">
                 <div class="modal-header">
                     <h4 class="modal-title">Añadir Familia de Equipos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -322,15 +322,19 @@
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/editar">
+            <form role="form" method="post" action="/familia/editarFamilia">
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Familia de Equipos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" name="id" id="idId" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <input type="text" name="nombre" id="nombreId" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -367,17 +371,12 @@
     function edit_clicked(id) {
         var data = id.split("-");
         var iterator = data.values();
-        console.log(id)
-        console.log(data);
-        console.log(iterator);
-        document.getElementById("matriculaEdit").value = iterator.next().value;
-        document.getElementById("nombreEdit").value = iterator.next().value;
-        document.getElementById("apellidoEdit").value = iterator.next().value;
-        document.getElementById("telefonoEdit").value = iterator.next().value;
+        document.getElementById("idId").value = iterator.next().value;
+        document.getElementById("nombreId").value = iterator.next().value;
     }
 
     function delete_clicked(id) {
-        document.getElementById("delete_form").setAttribute("action", "/eliminar/" + id);
+        document.getElementById("delete_form").setAttribute("action", "/familia/eliminarFamilia/" + id);
     }
 </script>
 </body>

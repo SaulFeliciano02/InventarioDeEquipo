@@ -51,8 +51,8 @@ public class SubFamiliaServicio {
     }
 
     @Transactional
-    public boolean editarSubFamilia(SubFamilia subFamilia){
-        Optional<SubFamilia> e = Optional.ofNullable(subFamiliaRepositorio.findById(subFamilia.getId()));
+    public boolean editarSubFamilia(SubFamilia subFamilia, long id){
+        Optional<SubFamilia> e = Optional.ofNullable(subFamiliaRepositorio.findById(id));
         if(e.isPresent()){
             SubFamilia nuevaSubFamilia = e.get();
             nuevaSubFamilia.setNombre(subFamilia.getNombre());

@@ -10,8 +10,8 @@ public class HomeControlador {
         return "/thymeleaf/home";
     }
 
-    @RequestMapping("/familia")
-    public String familia(){
+    //@RequestMapping("/familia")
+    /**public String familia(){
         return "/thymeleaf/familyAndSub";
-    }
+    }**/
 }

@@ -264,19 +264,20 @@
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="estudiante : ${listaEstudiantes}">
+            <th:block th:each="subfamilia : ${listaSubFamilias}">
                 <tr>
                     <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" th:id="'checkbox' + ${estudiante.matricula}" name="options[]" value="1">
-                            <label th:for="'checkbox' + ${estudiante.matricula}"></label>
+                            <input type="checkbox" th:id="'checkbox' + ${subfamilia.id}" name="options[]" value="1">
+                            <label th:for="'checkbox' + ${subfamilia.id}"></label>
                         </span>
                     </td>
-                    <td th:text = "${estudiante.nombre}" th:id="${estudiante.nombre}"></td>
-                    <td th:text = "${estudiante.apellido}"></td>
+                    <td th:text = "${subfamilia.id}" th:id="${subfamilia.id}"></td>
+                    <td th:text = "${subfamilia.nombre}"></td>
+                    <td th:text = "${subfamilia.miFamilia.nombre}"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${estudiante.matricula} + '-' + ${estudiante.nombre} + '-' + ${estudiante.apellido} + '-' + ${estudiante.telefono}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${estudiante.matricula}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${subfamilia.id} + '-' + ${subfamilia.nombre} + '-' + ${subfamilia.miFamilia.id} + '-' + ${subfamilia.miFamilia.nombre}" onclick="editSub_clicked(this.id)">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${subfamilia.id}" onclick="deleteSub_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
             </th:block>
@@ -300,7 +301,7 @@
 <div id="addSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/crear">
+            <form role="form" method="post" action="/familia/crearSubFamilia">
                 <div class="modal-header">
                     <h4 class="modal-title">Añadir Sub-Familia de Equipos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -312,8 +313,11 @@
                     </div>
                     <div class="form-group">
                         <label>Familia
-                            <select required>
-                                <option>-Selecciona una Familia-</option>
+                            <select name="familia" required>
+                                <option>Selecciona una familia</option>
+                                <th:block th:each="familia : ${listaFamilias}">
+                                    <option th:text = "${familia.id} + '-' + ${familia.nombre}"></option>
+                                </th:block>
                             </select>
                         </label>
                     </div>
@@ -330,20 +334,27 @@
 <div id="editSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/editar">
+            <form role="form" method="post" action="/editarSubFamilia">
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Sub-Familia de Equipos</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
+                        <label>ID</label>
+                        <input type="text" name="id" id="idEdit" class="form-control" required readonly>
+                    </div>
+                    <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" name="nombre" class="form-control" required>
+                        <input type="text" name="nombre" id="nombreEdit" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Familia
-                            <select required>
-                                <option>-Selecciona una Familia-</option>
+                            <select name="familia" id="familiaEdit" required>
+                                <option>Selecciona una familia</option>
+                                <th:block th:each="familia : ${listaFamilias}">
+                                    <option th:text = "${familia.id} + '-' + ${familia.nombre}"></option>
+                                </th:block>
                             </select>
                         </label>
                     </div>
@@ -360,7 +371,7 @@
 <div id="deleteSubModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" id="delete_form">
+            <form method="post" id="delete_formSub">
                 <div class="modal-header">
                     <h4 class="modal-title">Eliminar Sub-Familia</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -379,20 +390,17 @@
 </div>
 
 <script type="text/javascript">
-    function edit_clicked(id) {
+    function editSub_clicked(id) {
         var data = id.split("-");
-        var iterator = data.values();
-        console.log(id)
         console.log(data);
-        console.log(iterator);
-        document.getElementById("matriculaEdit").value = iterator.next().value;
+        var iterator = data.values();
+        document.getElementById("idEdit").value = iterator.next().value;
         document.getElementById("nombreEdit").value = iterator.next().value;
-        document.getElementById("apellidoEdit").value = iterator.next().value;
-        document.getElementById("telefonoEdit").value = iterator.next().value;
+        document.getElementById("familiaEdit").value = iterator.next().value + '-' + iterator.next().value;
     }
 
-    function delete_clicked(id) {
-        document.getElementById("delete_form").setAttribute("action", "/eliminar/" + id);
+    function deleteSub_clicked(id) {
+        document.getElementById("delete_formSub").setAttribute("action", "/familia/eliminarSubFamilia/" + id);
     }
 </script>
 </body>

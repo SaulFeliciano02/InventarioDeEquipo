@@ -15,7 +15,7 @@ import saulwebavanzada.demo.services.SubFamiliaServicio;
 import java.io.File;
 
 @Controller
-@RequestMapping("/equipos")
+@RequestMapping("/inventario")
 public class EquipoControlador {
     @Autowired
     public EquipoServicio equipoServicio;
@@ -39,7 +39,7 @@ public class EquipoControlador {
         SubFamilia subFamilia = subFamiliaServicio.getSubFamiliaByNombre(subFamiliaNombre);
         Equipo equipo = new Equipo(nombre, costoAlquiler, subFamilia, null, existencia);
         equipoServicio.crearEquipo(equipo);
-        return "redirect:/equipos";
+        return "redirect:/inventario";
     }
 
     @RequestMapping(path = "/editar")
@@ -51,13 +51,13 @@ public class EquipoControlador {
         SubFamilia subFamilia = subFamiliaServicio.getSubFamiliaByNombre(subFamiliaNombre);
         Equipo equipo = new Equipo(nombre, costoAlquiler, subFamilia, null, existencia);
         equipoServicio.editarEquipo(equipo);
-         return "redirect:/equipos";
+         return "redirect:/inventario";
      }
 
     @RequestMapping(path = "/eliminar/{id}")
     public String eliminarEquipo(Model model, @PathVariable(name = "id") long id){
         equipoServicio.eliminarEquipo(id);
-        return "redirect:/equipos";
+        return "redirect:/inventario";
     }
 
 //    @RequestMapping(path = "/")

@@ -1,6 +1,7 @@
 package saulwebavanzada.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Familia;
 import saulwebavanzada.demo.repositories.FamiliaRepositorio;
@@ -8,6 +9,7 @@ import saulwebavanzada.demo.repositories.FamiliaRepositorio;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class FamiliaServicio {
     @Autowired
     private FamiliaRepositorio familiaRepositorio;
@@ -44,8 +46,8 @@ public class FamiliaServicio {
     }
 
     @Transactional
-    public boolean editarFamilia(Familia familia){
-        Optional<Familia> e = Optional.ofNullable(familiaRepositorio.findById(familia.getId()));
+    public boolean editarFamilia(Familia familia, long id){
+        Optional<Familia> e = Optional.ofNullable(familiaRepositorio.findById(id));
         if(e.isPresent()){
             Familia nuevaFamilia = e.get();
             nuevaFamilia.setNombre(familia.getNombre());

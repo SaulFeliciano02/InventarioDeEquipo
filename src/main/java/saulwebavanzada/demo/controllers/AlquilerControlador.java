@@ -12,9 +12,12 @@ import saulwebavanzada.demo.entities.Equipo;
 import saulwebavanzada.demo.entities.Factura;
 import saulwebavanzada.demo.services.AlquilerServicio;
 import saulwebavanzada.demo.services.ClienteServicio;
+import saulwebavanzada.demo.services.EquipoServicio;
 import saulwebavanzada.demo.services.FacturaServicio;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
@@ -23,12 +26,33 @@ public class AlquilerControlador {
     @Autowired public AlquilerServicio alquilerServicio;
     @Autowired public ClienteServicio clienteServicio;
     @Autowired public FacturaServicio facturaServicio;
+    @Autowired public EquipoServicio equipoServicio;
 
     @RequestMapping("")
     public String listarAlquileres(Model model){
         model.addAttribute("listaAlquileres", alquilerServicio.getAlquileres());
         model.addAttribute("listaClientes", clienteServicio.getClientes());
+        model.addAttribute("listaEquipos", equipoServicio.getEquipos());
         return "/thymeleaf/rental.html";
+    }
+
+    @RequestMapping("/crear")
+    public String crearAlquiler(@RequestParam(name = "equipo") String equipoInfo,
+                                @RequestParam(name = "cantidad") int cantidad,
+                                @RequestParam(name = "fechaPrometida") String fechaPrometidaInfo,
+                                @RequestParam(name = "cliente") String clienteInfo) throws ParseException {
+        Date fechaActual = new Date();
+        Cliente cliente = clienteServicio.getClienteById(Long.parseLong(clienteInfo.split("-")[0]));
+        Equipo equipo = equipoServicio.getEquipoById(Long.parseLong(equipoInfo.split("-")[0]));
+        Date fechaPrometida = new SimpleDateFormat("dd/MM/yyyy").parse(fechaPrometidaInfo.split("-")[2] + "/" + fechaPrometidaInfo.split("-")[1] + "/" + fechaPrometidaInfo.split("-")[0]);
+        for(int i = 0; i < cantidad; i++){
+            Alquiler alquiler = new Alquiler(equipo, fechaActual, fechaPrometida, cliente);
+            alquilerServicio.crearAlquiler(alquiler);
+        }
+
+        equipo.setExistencia(equipo.getExistencia()-cantidad);
+        equipoServicio.editarEquipo(equipo);
+        return "redirect:/alquiler";
     }
 
     @RequestMapping("/crearFactura")
