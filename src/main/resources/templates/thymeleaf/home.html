@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:spring="http://www.w3.org/1999/XSL/Transform">
 
 <head th:fragment="css">
 
@@ -23,35 +23,35 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav" th:fragment="navigation">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Inicio</a>
+      <a class="navbar-brand js-scroll-trigger" href="#page-top" th:text="#{inicio}">Inicio</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#inventario">Inventario</a>
+            <a class="nav-link js-scroll-trigger" href="#inventario" th:text="#{inventario}"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#familia">Familias</a>
+            <a class="nav-link js-scroll-trigger" href="#familia" th:text="#{familias}"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#alquiler">Alquiler</a>
+            <a class="nav-link js-scroll-trigger" href="#alquiler" th:text="#{alquiler}"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#facturas">Facturas</a>
+            <a class="nav-link js-scroll-trigger" href="#facturas" th:text="#{factura}"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#clientes">Clientes</a>
+            <a class="nav-link js-scroll-trigger" href="#clientes" th:text="#{cliente}"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#usuarios">Usuarios</a>
+            <a class="nav-link js-scroll-trigger" href="#usuarios" th:text="#{usuario}"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#estadisticas">Estadisticas</a>
+            <a class="nav-link js-scroll-trigger" href="#estadisticas" th:text="#{estadistica}"></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/">Iniciar Sesion</a>
+            <a class="nav-link" href="/" th:text="#{inicio_sesion}"></a>
           </li>
         </ul>
       </div>
@@ -60,8 +60,8 @@
 
   <header class="bg-primary text-white" th:fragment="header">
     <div class="container text-center">
-      <h1>Bienvenido a Equipos de Renta S&M</h1>
-      <p class="lead">El lugar donde puedes conseguir todo tipo utensilios a precio de vaca muerta!</p>
+      <h1 th:text="#{bienvenida}"></h1>
+      <p class="lead" th:text="#{slogan}"></p>
     </div>
   </header>
 
@@ -69,9 +69,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Inventario</h2>
-          <p class="lead">En este modulo puedes visualizar informaciones sobre tus productos</p>
-          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/inventario';">Acceder al Inventario</button>
+          <h2 th:text="#{inventario}"></h2>
+          <p class="lead" th:text="#{inventario_descripcion}"></p>
+          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/inventario';" th:text="#{inventario_acceder}"></button>
         </div>
       </div>
     </div>
@@ -81,9 +81,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Familias & Sub-Familias de Equipos</h2>
-          <p class="lead">En este modulo puedes visualizar y manejar todo sobre tus familias y sub-familias de productos</p>
-          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/familia';">Acceder a Familias & Sub-Familias</button>
+          <h2 th:text="#{familias_titulo}"></h2>
+          <p class="lead" th:text="#{familias_descripcion}"></p>
+          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/familia';" th:text="#{familias_acceder}"></button>
         </div>
       </div>
     </div>
@@ -93,9 +93,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Alquiler</h2>
-          <p class="lead">En este modulo puedes realizar todas las operaciones para el manejo de tus alquileres y facturacion</p>
-          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/alquiler';">Acceder a Alquiler</button>
+          <h2 th:text="#{alquiler}"></h2>
+          <p class="lead" th:text="#{alquiler_descripcion}"></p>
+          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/alquiler';" th:text="#{alquiler_acceder}"></button>
         </div>
       </div>
     </div>
@@ -105,9 +105,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Facturas</h2>
-          <p class="lead">En este modulo puedes visualizar tu registro de facturas y generar nuevas</p>
-          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/facturas';">Acceder a Facturas</button>
+          <h2 th:text="#{factura}">Facturas</h2>
+          <p class="lead" th:text="#{factura_descripcion}"></p>
+          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/facturas';" th:text="#{factura_acceder}"></button>
         </div>
       </div>
     </div>
@@ -117,9 +117,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Clientes</h2>
-          <p class="lead">En este modulo puedes realizar todas las operaciones para el manejo de tus clientes</p>
-          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/clientes';">Acceder a Clientes</button>
+          <h2 th:text="#{cliente}"></h2>
+          <p class="lead" th:text="#{cliente_descripcion}"></p>
+          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/clientes';" th:text="#{cliente_acceder}"></button>
         </div>
       </div>
     </div>
@@ -129,9 +129,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Usuarios</h2>
-          <p class="lead">En este modulo puedes manejar tus usuarios y sus roles</p>
-          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/usuarios';">Acceder a Usuarios</button>
+          <h2 th:text="#{usuario}"></h2>
+          <p class="lead" th:text="#{usuario_descripcion}"></p>
+          <button type="button" class="btn btn-primary btn-lg" onclick="window.location='/usuarios';" th:text="#{usuario_acceder}"></button>
         </div>
       </div>
     </div>
@@ -141,9 +141,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>Estadisticas</h2>
-          <p class="lead">En este modulo puedes visualizar el estado de tu negocio y sus metricas</p>
-          <a href="/usuarios"><button type="button" class="btn btn-primary btn-lg">Acceder a Estadisticas</button></a>
+          <h2 th:text="#{estadistica}"></h2>
+          <p class="lead" th:text="#{estadistica_descripcion}"></p>
+          <a href="/usuarios"><button type="button" class="btn btn-primary btn-lg" th:text="#{estadistica_acceder}"></button></a>
         </div>
       </div>
     </div>

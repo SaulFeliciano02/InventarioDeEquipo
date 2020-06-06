@@ -33,8 +33,7 @@ public class ClienteControlador {
                                @RequestParam(name = "apellido") String apellido,
                                @RequestParam(name = "cedula") String cedula,
                                @RequestParam(name = "imagen") File file){
-        byte[] imagen = null;
-        try{
+        /**try{
             byte[] imagen = new byte[file.getBytes().length];
             int i = 0;
             for (byte b : file.getBytes()){
@@ -43,7 +42,7 @@ public class ClienteControlador {
 
         }catch(IOException e){
             e.printStackTrace();
-        }
+        }**/
         List<Alquiler> alquiler = new ArrayList<Alquiler>();
         Cliente cliente= new Cliente(nombre, apellido, cedula, alquiler, null);
         clienteServicio.crearCliente(cliente);
