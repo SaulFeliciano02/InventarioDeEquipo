@@ -282,7 +282,7 @@
                     <td th:text = "${alquiler.miCliente.nombre}"></td>
                     <td th:text = "${alquiler.pagado} ? 'Si' : 'No'"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${alquiler.id} + '-' + ${alquiler.equipo.nombre} + '-' + ${alquiler.fechaRealizacion} +  '-' + ${alquiler.miCliente.id} + '-' + ${alquiler.miCliente.nombre} + '-' + ${alquiler.pagado} + '-' + ${alquiler.equipo.costoAlquiler}" onclick="new_factura(this.id)">&#xE254;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${alquiler.id} + '/' + ${alquiler.equipo.id} + '/' +  ${alquiler.equipo.nombre} + '/' + ${alquiler.fechaRealizacion} +  '/' + ${alquiler.miCliente.id} + '/' + ${alquiler.miCliente.nombre} + '/' + ${alquiler.equipo.costoAlquiler}" onclick="new_factura(this.id)">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${alquiler.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
@@ -378,7 +378,7 @@
                     </div>
                     <div class="form-group">
                         <label>Fecha de Alquilado</label>
-                        <input type="date" name="fechaAlquilado" id="fechaAlquiladoId" class="form-control" required readonly>
+                        <input type="text" name="fechaAlquilado" id="fechaAlquiladoId" class="form-control" required readonly>
                     </div>
                     <div class="form-group">
                         <label>Fecha de entrega</label>
@@ -416,24 +416,45 @@
 </div>
 <script type="text/javascript">
     function new_factura(id) {
-        var data = id.split("-");
+        var data = id.split("/");
         var iterator = data.values();
-
-        var nombreEquipoId = iterator.next().value + "-" + iterator.next().value;
-        var fechaAlquiladoId = date(iterator.next().value);
-        var nombreClienteId = iterator.next().value + "-" + iterator.next().value;
+        console.log(data);
         var nombreAlquilerId = iterator.next().value;
+        var nombreEquipoId = iterator.next().value + "-" + iterator.next().value;
+        var fechaAlquiladoId = iterator.next().value;
+        var nombreClienteId = iterator.next().value + "-" + iterator.next().value;
+        console.log(nombreAlquilerId);
+        console.log(nombreEquipoId);
+        console.log(fechaAlquiladoId);
+        console.log(nombreClienteId);
+
+        var fechaAlquilado = fechaAlquiladoId.split("-")[2].split(" ")[0] + "/" + fechaAlquiladoId.split("-")[1] + "/" + fechaAlquiladoId.split("-")[0];
+
 
         document.getElementById("nombreEquipoId").value = nombreEquipoId;
-        document.getElementById("fechaAlquiladoId").value = fechaAlquiladoId;
+        document.getElementById("fechaAlquiladoId").value = fechaAlquilado;
         document.getElementById("nombreClienteId").value =  nombreClienteId;
         document.getElementById("nombreAlquilerId").value = nombreAlquilerId;
 
         var montoAlquiler = iterator.next().value;
-        var current_date = new Date();
-        var Difference_In_Time = current_date - fechaAlquiladoId.getTime();
-        var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-        var montoPagar = Difference_In_Days * montoAlquiler;
+        console.log(montoAlquiler);
+        var today = new Date();
+
+        //var Difference_In_Time = current_date - fechaAlquiladoId.getTime();
+        //var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        //var montoPagar = Difference_In_Days * montoAlquiler;
+        var current_date = today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear();
+        var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        var firstDate = new Date(parseInt(fechaAlquilado.split("/")[2]), parseInt(fechaAlquilado.split("/")[1]), parseInt(fechaAlquilado.split("/")[0]));
+        var secondDate = new Date(today.getFullYear(), today.getMonth()+1, today.getDate());
+        var diffDays = Math.ceil(Math.abs((firstDate - secondDate) / oneDay));
+        console.log(diffDays);
+        var montoPagar = diffDays * montoAlquiler;
+        if(diffDays == 0){
+            montoPagar = montoAlquiler;
+        }
+
+        console.log(montoPagar);
 
         document.getElementById("montoPagarId").value = montoPagar;
         document.getElementById("fechaEntregaId").value = current_date;

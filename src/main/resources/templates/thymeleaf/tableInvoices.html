@@ -260,25 +260,26 @@
                 </th>
                 <th>ID</th>
                 <th>Equipo</th>
-                <th>Alquiler</th>
-                <th>Fecha Prometida de Entrega</th>
                 <th>Cliente</th>
+                <th>Monto</th>
             </tr>
             </thead>
             <tbody>
-            <th:block th:each="estudiante : ${listaEstudiantes}">
+            <th:block th:each="factura : ${listaFacturas}">
                 <tr>
                     <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" th:id="'checkbox' + ${estudiante.matricula}" name="options[]" value="1">
-                            <label th:for="'checkbox' + ${estudiante.matricula}"></label>
+                            <input type="checkbox" th:id="'checkbox' + ${factura.id}" name="options[]" value="1">
+                            <label th:for="'checkbox' + ${factura.id}"></label>
                         </span>
                     </td>
-                    <td th:text = "${estudiante.nombre}" th:id="${estudiante.nombre}"></td>
-                    <td th:text = "${estudiante.apellido}"></td>
+                    <td th:text = "${factura.id}" th:id="${factura.id}"></td>
+                    <td th:text = "${factura.equipo.nombre}"></td>
+                    <td th:text = "${factura.alquiler.miCliente.nombre} + ' ' + ${factura.alquiler.miCliente.apellido}"></td>
+                    <td th:text = "${factura.montoTotal}"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${estudiante.matricula} + '-' + ${estudiante.nombre} + '-' + ${estudiante.apellido} + '-' + ${estudiante.telefono}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
-                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${estudiante.matricula}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${factura.id} + '-' + ${factura.equipo.nombre} + '-' + ${factura.alquiler.id} + '-' + ${factura.montoTotal}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
+                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${factura.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>
             </th:block>
