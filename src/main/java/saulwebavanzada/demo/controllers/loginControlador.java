@@ -10,7 +10,13 @@ import java.util.Optional;
 @RequestMapping("/")
 public class loginControlador {
 
-    @RequestMapping(path = "/")
+    @RequestMapping(path = "")
+    public String redirectologin()
+    {
+        return "redirect:login";
+    }
+
+    @RequestMapping(path = "/login")
     public String login(){
         return "/thymeleaf/index";
     }
