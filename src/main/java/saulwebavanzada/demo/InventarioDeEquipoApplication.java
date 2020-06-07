@@ -23,13 +23,16 @@ public class InventarioDeEquipoApplication {
 //        SpringApplication.run(InventarioDeEquipoApplication.class, args);
 
         ApplicationContext applicationContext = SpringApplication.run(InventarioDeEquipoApplication.class, args);
-        RoleServicio roleServicio = (RoleServicio) applicationContext.getBean("roleServicio");
+        /**RoleServicio roleServicio = (RoleServicio) applicationContext.getBean("roleServicio");
         Role roleAdmin = new Role("ROLE_ADMIN");
-        //roleServicio.crearRole(roleAdmin);
+        roleServicio.crearRole(roleAdmin);
 
         UsuarioServicio usuarioServicio = (UsuarioServicio) applicationContext.getBean("usuarioServicio");
         Usuario usuarioAdmin = new Usuario("admin", "admin", new HashSet<>(Arrays.asList(roleAdmin)));
-        //usuarioServicio.crearUsuario(usuarioAdmin);
+        usuarioServicio.crearUsuario(usuarioAdmin);**/
+
+        SeguridadServicio seguridadServicio = (SeguridadServicio) applicationContext.getBean("seguridadServicio");
+        seguridadServicio.crearUsuarioPorDefecto();
 
     }
 }

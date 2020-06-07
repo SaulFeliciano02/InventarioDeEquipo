@@ -13,7 +13,7 @@ public class Usuario implements Serializable{
     private String username;
     @Column(length = 2000)
     private String password;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany()
     private Set<Role> roles;
     @Column(columnDefinition = "boolean default true")
     private boolean activo;
