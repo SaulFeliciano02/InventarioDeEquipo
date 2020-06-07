@@ -1,14 +1,17 @@
 package saulwebavanzada.demo.controllers;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import saulwebavanzada.demo.entities.Role;
 import saulwebavanzada.demo.entities.Usuario;
 import saulwebavanzada.demo.services.UsuarioServicio;
+
+import java.util.Set;
 
 @Controller
 @RequestMapping("/usuarios")
@@ -16,16 +19,18 @@ public class UsuarioControlador {
     @Autowired
     public UsuarioServicio usuarioServices;
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping("")
     public String listarUsuarios(Model model){
         model.addAttribute("listaUsuarios", usuarioServices.getUsuario());
         return "/thymeleaf/users.html";
     }
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping("/crear")
-    public String crearCliente(Model model, @RequestParam(name = "username") String username,
+    public String crearUsuario(Model model, @RequestParam(name = "username") String username,
                                @RequestParam(name = "contrasena") String password,
-                               @RequestParam(name = "role") String role){
+                               @RequestParam(name = "role") Set<Role> role){
         Usuario usuario = new Usuario(username, password, role);
         usuarioServices.crearUsuario(usuario);
         return "redirect:/usuarios";
@@ -43,9 +48,10 @@ public class UsuarioControlador {
         return "redirect:/clientes";
     }**/
 
+    @Secured({"ROLE_ADMIN"})
     @RequestMapping(path = "/eliminar/{id}")
-    public String eliminarEstudiante(Model model, @PathVariable(name = "id") long id){
+    public String eliminarUsuario(Model model, @PathVariable(name = "id") long id){
         usuarioServices.eliminarUsuario(id);
-        return "redirect:/listar";
+        return "redirect:/usuarios";
     }
 }

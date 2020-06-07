@@ -1,12 +1,11 @@
 package saulwebavanzada.demo.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity
-public class Usuario {
+public class Usuario implements Serializable{
     @Id
     @GeneratedValue
     private long id;
@@ -14,15 +13,20 @@ public class Usuario {
     private String username;
     @Column(length = 2000)
     private String password;
-    @Column(length = 2000)
-    private String role;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Role> roles;
+    @Column(columnDefinition = "boolean default true")
+    private boolean activo;
+    @Transient
+    private String passwordConfirm;
 
     public Usuario(){}
 
-    public Usuario(String username, String password, String role){
+    public Usuario(String username, String password, Set<Role> role){
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.roles = role;
+        this.activo = true;
     }
 
     public long getId() {
@@ -45,12 +49,28 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }
 

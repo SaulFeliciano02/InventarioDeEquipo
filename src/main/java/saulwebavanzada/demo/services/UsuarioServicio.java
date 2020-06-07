@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Equipo;
+import saulwebavanzada.demo.entities.Role;
 import saulwebavanzada.demo.entities.Usuario;
 import saulwebavanzada.demo.repositories.UsuarioRepositorio;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,13 +44,12 @@ public class UsuarioServicio {
     }
 
     @Transactional
-    public boolean editarEquipo(Usuario usuario){
+    public boolean editarUsuario(Usuario usuario){
         Optional<Usuario> e = Optional.ofNullable(usuarioRepositorio.findById(usuario.getId()));
         if(e.isPresent()){
             Usuario nuevoUsuario = e.get();
             nuevoUsuario.setUsername(usuario.getUsername());
-            nuevoUsuario.setUsername(usuario.getUsername());
-            nuevoUsuario.setRole(usuario.getRole());
+            nuevoUsuario.setRoles(usuario.getRoles());
             return true;
         }
         return false;
