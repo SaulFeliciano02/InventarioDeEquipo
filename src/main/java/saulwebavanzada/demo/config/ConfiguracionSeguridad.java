@@ -71,19 +71,20 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
         //Marcando las reglas para permitir unicamente los usuarios
         http
                 .authorizeRequests()
-                .antMatchers("/","/resources/**").permitAll() //permitiendo llamadas a esas urls.
+                .antMatchers("/","/java/resources/**", "/login", "/home", "/demo/**", "/css/**", "/js/**", "/images/**", "/webjars/**", "**/favicon.ico", "**/bootstrap/**").permitAll() //permitiendo llamadas a esas urls.
                 .antMatchers("/dbconsole/**").permitAll()
+                .anyRequest().permitAll();
 //                .antMatchers("/admin/").hasAnyRole("ADMIN", "USER")
 //                .antMatchers("/estudiantes").permitAll() //hasAnyRole("ADMIN", "USER")
-                .anyRequest().denyAll() //cualquier llamada debe ser validada
-                .and()
-                .formLogin()
-                .loginPage("/") //indicando la ruta que estaremos utilizando.
-                .failureUrl("/login?error") //en caso de fallar puedo indicar otra pagina.
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+//                .anyRequest().denyAll() //cualquier llamada debe ser validada
+//                .and()
+//                .formLogin()
+//                .loginPage("/") //indicando la ruta que estaremos utilizando.
+//                .failureUrl("/login?error") //en caso de fallar puedo indicar otra pagina.
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll();
 
         //deshabilitando las seguridad contra los frame internos.
         //Necesario para H2.
