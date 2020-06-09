@@ -32,17 +32,20 @@ public class SeguridadServicio implements UserDetailsService {
     @Transactional()
     public boolean crearUsuarioPorDefecto(){
         try {
-            usuarioRepositorio.count();
+            if(usuarioRepositorio.count() == 0){
+                Role roleAdmin = new Role("ROLE_ADMIN");
+                roleRepositorio.save(roleAdmin);
+
+                Role roleUser = new Role("ROLE_USER");
+                roleRepositorio.save(roleUser);
+
+                Usuario usuario = new Usuario("admin",  bCryptPasswordEncoder.encode("admin"), new HashSet<>(Arrays.asList(roleAdmin)));
+                usuarioRepositorio.save(usuario);
+            }
+
         }catch (NullPointerException e)
         {
-            Role roleAdmin = new Role("ROLE_ADMIN");
-            roleRepositorio.save(roleAdmin);
 
-            Role roleUser = new Role("ROLE_USER");
-            roleRepositorio.save(roleUser);
-
-            Usuario usuario = new Usuario("admin",  bCryptPasswordEncoder.encode("admin"), new HashSet<>(Arrays.asList(roleAdmin)));
-            usuarioRepositorio.save(usuario);
 
             return true;
         }

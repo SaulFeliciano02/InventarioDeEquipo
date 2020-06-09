@@ -43,9 +43,12 @@ public class ClienteControlador {
         }catch(IOException e){
             e.printStackTrace();
         }**/
+        byte[] imagen = Base64.getEncoder().encode(file.getBytes());
         List<Alquiler> alquiler = new ArrayList<Alquiler>();
+
         byte[] encoded = Base64.getEncoder().encode(file.getBytes());
         Cliente cliente= new Cliente(nombre, apellido, cedula, alquiler, encoded);
+
         clienteServicio.crearCliente(cliente);
         return "redirect:/clientes";
     }
