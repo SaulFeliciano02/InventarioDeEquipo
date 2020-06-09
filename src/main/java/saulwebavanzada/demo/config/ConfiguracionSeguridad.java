@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,54 +13,24 @@ import javax.sql.DataSource;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
-//    @Autowired
-//    private DataSource dataSource;
-//    @Value("${query.user-jdbc}")
-//    private String queryUsuario;
-//    @Value("${query.rol-jdbc}")
-//    private String queryRol;
 
-//    @Autowired
-//    private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-//    /**
-//     * La autentificación de los usuarios.
-//     * @param auth
-//     * @throws Exception
-//     */
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        //Clase para encriptar contraseña
-//        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
-//
-//        //Cargando los usuarios en memoria.
-//        /*auth.inMemoryAuthentication().passwordEncoder(bCryptPasswordEncoder)
-//                .withUser("admin")
-//                .password(bCryptPasswordEncoder.encode("admin"))
-//                .roles("ADMIN","USER")
-//                .and()
-//                .withUser("usuario")
-//                .password(bCryptPasswordEncoder.encode("1234"))
-//                .roles("USER")
-//                .and()
-//                .withUser("vendedor")
-//                .password(bCryptPasswordEncoder.encode("1234"))
-//                .roles("VENDEDOR");*/
-//
-//
-//
-//        //Configuración para acceso vía JDBC
-//       /* auth.jdbcAuthentication()
-//                .usersByUsernameQuery(queryUsuario)
-//                .authoritiesByUsernameQuery(queryRol)
-//                .dataSource(dataSource)
-//                .passwordEncoder(bCryptPasswordEncoder);*/
-//
-//        //Configuración JPA.
-//        auth
-//                .userDetailsService(userDetailsService)
-//                .passwordEncoder(bCryptPasswordEncoder);
-//    }
+    /**
+     * La autentificación de los usuarios.
+     * @param auth
+     * @throws Exception
+     */
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //Clase para encriptar contraseña
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+
+        //Cargando los usuarios en memoria.
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+
+    }
 
     /*
      * Permite configurar las reglas de seguridad.
@@ -71,24 +42,32 @@ public class ConfiguracionSeguridad extends WebSecurityConfigurerAdapter {
         //Marcando las reglas para permitir unicamente los usuarios
         http
                 .authorizeRequests()
-                .antMatchers("/","/java/resources/**", "/login", "/home", "/demo/**", "/css/**", "/js/**", "/images/**", "/webjars/**", "**/favicon.ico", "**/bootstrap/**").permitAll() //permitiendo llamadas a esas urls.
+                .antMatchers("/", "/webjars/**", "/resources/**").permitAll() //permitiendo llamadas a esas urls.
+                .antMatchers("/css/**", "/js/**", "/images/**", "/vendor/**").permitAll()//acceso a cualquier estilo/animacion en los archivos
+//                .antMatchers("/home").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/dbconsole/**").permitAll()
-                .anyRequest().permitAll();
-//                .antMatchers("/admin/").hasAnyRole("ADMIN", "USER")
-//                .antMatchers("/estudiantes").permitAll() //hasAnyRole("ADMIN", "USER")
-//                .anyRequest().denyAll() //cualquier llamada debe ser validada
-//                .and()
-//                .formLogin()
-//                .loginPage("/") //indicando la ruta que estaremos utilizando.
-//                .failureUrl("/login?error") //en caso de fallar puedo indicar otra pagina.
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
+                .antMatchers("/home", "/alquiler/**", "/inventario/**", "/clientes/**", "/facturas/**", "/familia/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/usuarios/**").hasAuthority("ROLE_ADMIN")
+                .anyRequest().denyAll()//toda llamada debe ser validada
+                .and()
+                .formLogin()
+                .defaultSuccessUrl("/home")//redireccion por defecto de autentificacion correcta
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
 
         //deshabilitando las seguridad contra los frame internos.
         //Necesario para H2.
         http.csrf().disable();
         http.headers().frameOptions().disable();
+    }
+
+    //this method allows static resources to be neglected by spring security
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**", "/static/**","/webjars/**");
     }
 }

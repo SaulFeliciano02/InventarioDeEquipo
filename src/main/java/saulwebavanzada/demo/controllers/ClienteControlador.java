@@ -32,7 +32,7 @@ public class ClienteControlador {
     public String crearCliente(Model model, @RequestParam(name = "nombre") String nombre,
                                @RequestParam(name = "apellido") String apellido,
                                @RequestParam(name = "cedula") String cedula,
-                               @RequestParam(name = "imagen") MultipartFile file) throws IOException {
+                               @RequestParam(name = "imagen") MultipartFile file) throws IOException{
         /**try{
             byte[] imagen = new byte[file.getBytes().length];
             int i = 0;
@@ -45,7 +45,10 @@ public class ClienteControlador {
         }**/
         byte[] imagen = Base64.getEncoder().encode(file.getBytes());
         List<Alquiler> alquiler = new ArrayList<Alquiler>();
-        Cliente cliente= new Cliente(nombre, apellido, cedula, alquiler, imagen);
+
+        byte[] encoded = Base64.getEncoder().encode(file.getBytes());
+        Cliente cliente= new Cliente(nombre, apellido, cedula, alquiler, encoded);
+
         clienteServicio.crearCliente(cliente);
         return "redirect:/clientes";
     }

@@ -274,9 +274,9 @@
                         </span>
                     </td>
                     <td th:text = "${usuario.username}" th:id="${usuario.username}"></td>
-                    <td th:text = "${usuario.role}"></td>
+                    <td th:text = "${usuario.roles[0].name}"></td>
                     <td>
-                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${usuario.username} + '-' + ${usuario.password} + '-' + ${usuario.role}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
+                        <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${usuario.username} + '-' + ${usuario.password} + '-' + ${usuario.roles}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${usuario.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                     </td>
                 </tr>

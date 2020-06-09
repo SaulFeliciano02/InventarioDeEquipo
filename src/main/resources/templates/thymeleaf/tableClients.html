@@ -280,7 +280,7 @@
                     <td th:text = "${cliente.nombre}"></td>
                     <td th:text = "${cliente.apellido}"></td>
                     <td th:text = "${cliente.cedula}"></td>
-                    <td th:text = "${cliente.imagen}"></td>
+                    <td> <img th:src="@{'data:image/jpg;base64,'+ ${cliente.imagen}}" height=100 width=300 alt="*"></td>
                     <td>
                         <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${cliente.id} + '-' + ${cliente.nombre} + '-' + ${cliente.apellido} + '-' + ${cliente.cedula} + '-' + ${cliente.imagen}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${cliente.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
