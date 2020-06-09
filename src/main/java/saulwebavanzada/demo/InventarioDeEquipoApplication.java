@@ -1,20 +1,10 @@
 package saulwebavanzada.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import saulwebavanzada.demo.entities.Role;
-import saulwebavanzada.demo.entities.Usuario;
-import saulwebavanzada.demo.repositories.RoleRepositorio;
-import saulwebavanzada.demo.repositories.UsuarioRepositorio;
-import saulwebavanzada.demo.services.RoleServicio;
-import saulwebavanzada.demo.services.SeguridadServicio;
-import saulwebavanzada.demo.services.UsuarioServicio;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @SpringBootApplication
 public class InventarioDeEquipoApplication {
@@ -31,5 +21,17 @@ public class InventarioDeEquipoApplication {
 //        Usuario usuarioAdmin = new Usuario("admin", "admin", new HashSet<>(Arrays.asList(roleAdmin)));
 //        //usuarioServicio.crearUsuario(usuarioAdmin);
 
+    }
+
+    @Bean
+    public CookieLocaleResolver localeResolver() {
+        return new CookieLocaleResolver();
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
     }
 }

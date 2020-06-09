@@ -19,14 +19,14 @@ public class UsuarioControlador {
     @Autowired
     public UsuarioServicio usuarioServices;
 
-    @Secured({"ROLE_ADMIN"})
+    //@Secured({"ROLE_ADMIN"})
     @RequestMapping("")
     public String listarUsuarios(Model model){
         model.addAttribute("listaUsuarios", usuarioServices.getUsuario());
         return "/thymeleaf/users.html";
     }
 
-    @Secured({"ROLE_ADMIN"})
+    //@Secured({"ROLE_ADMIN"})
     @RequestMapping("/crear")
     public String crearUsuario(Model model, @RequestParam(name = "username") String username,
                                @RequestParam(name = "contrasena") String password,
@@ -48,7 +48,7 @@ public class UsuarioControlador {
         return "redirect:/clientes";
     }**/
 
-    @Secured({"ROLE_ADMIN"})
+    //@Secured({"ROLE_ADMIN"})
     @RequestMapping(path = "/eliminar/{id}")
     public String eliminarUsuario(Model model, @PathVariable(name = "id") long id){
         usuarioServices.eliminarUsuario(id);
