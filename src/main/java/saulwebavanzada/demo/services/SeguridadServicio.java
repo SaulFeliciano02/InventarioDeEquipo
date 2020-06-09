@@ -29,7 +29,7 @@ public class SeguridadServicio implements UserDetailsService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    @Transactional()
+    @PostConstruct
     public boolean crearUsuarioPorDefecto(){
         try {
             if(usuarioRepositorio.count() == 0){
