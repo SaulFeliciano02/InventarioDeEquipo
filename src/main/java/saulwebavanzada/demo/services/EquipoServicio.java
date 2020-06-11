@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Cliente;
 import saulwebavanzada.demo.entities.Equipo;
+import saulwebavanzada.demo.entities.SubFamilia;
 import saulwebavanzada.demo.repositories.EquipoRepositorio;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class EquipoServicio {
 
     public Equipo getEquipoById(long id){
         return equipoRepositorio.findById(id);
+    }
+
+    public List<Equipo> getEquipoBySubFamilia(SubFamilia subFamilia){
+        return equipoRepositorio.findAllByMiSubFamilia(subFamilia);
     }
 
     @Transactional

@@ -302,7 +302,14 @@
             </ul>
         </div>
     </div>
+
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div id="columnchart_values"></div>
+        </div>
+    </div>
 </div>
+
 <!-- Add Modal HTML -->
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
@@ -465,6 +472,40 @@
     }
 
 </script>
+
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+    // Set a callback to run when the Google Visualization API is loaded.
+    new google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'sub-familia');
+        data.addColumn('number', 'promedio de dias');
+
+        var subFamilias = [[${subFamilias}]];
+        var promediosSubFamilias = [[${promediosSubFamilias}]]
+        console.log(subFamilias);
+        console.log(promediosSubFamilias);
+        for(var i = 0; i < subFamilias.length; i++){
+            data.addRow([ subFamilias[i]['nombre'], promediosSubFamilias[i] ]);
+        }
+        var options = {
+            title: "Promedio de dias rentados por subfamilia de productos",
+            width: 600,
+            height: 400,
+            bar: {groupWidth: "95%"},
+            legend: { position: "none" },
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+        chart.draw(data, options);
+    }
+    /*]]>*/
+</script>
+
 </body>
 
 

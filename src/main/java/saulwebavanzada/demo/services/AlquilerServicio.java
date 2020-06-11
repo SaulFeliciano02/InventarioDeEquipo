@@ -4,11 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import saulwebavanzada.demo.entities.Alquiler;
+import saulwebavanzada.demo.entities.Equipo;
+import saulwebavanzada.demo.entities.SubFamilia;
 import saulwebavanzada.demo.entities.Usuario;
 import saulwebavanzada.demo.repositories.AlquilerRepositorio;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class AlquilerServicio {
@@ -17,11 +22,34 @@ public class AlquilerServicio {
     public AlquilerRepositorio alquilerRepositorio;
 
     public List<Alquiler> getAlquileres(){
-        return alquilerRepositorio.findAll();
+        return alquilerRepositorio.findAllOrderedByFechaRealizacion();
     }
 
     public Alquiler getAlquilerById(long id){
         return alquilerRepositorio.findById(id);
+    }
+
+    public List<Alquiler> getAlquilerByEquipo(Equipo equipo){
+        return alquilerRepositorio.findAllByEquipo(equipo);
+    }
+
+    public int getPromedioDiasBySubFamilia(List<Equipo> equipos){
+        int diasPromedio = 0;
+        int size = 0;
+        for(Equipo e : equipos){
+            List<Alquiler> alquileresByEquipo = getAlquilerByEquipo(e);
+            size += alquileresByEquipo.size();
+            for(Alquiler alquiler : alquileresByEquipo){
+                diasPromedio += DAYS.between(alquiler.getFechaRealizacion().toInstant(), alquiler.getFechaEntregaPrometida().toInstant());
+            }
+        }
+        try{
+            diasPromedio /= size;
+        }catch(Exception e){
+
+        }
+
+        return diasPromedio;
     }
 
     @Transactional

@@ -6,19 +6,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import saulwebavanzada.demo.entities.Alquiler;
-import saulwebavanzada.demo.entities.Cliente;
-import saulwebavanzada.demo.entities.Equipo;
-import saulwebavanzada.demo.entities.Factura;
-import saulwebavanzada.demo.services.AlquilerServicio;
-import saulwebavanzada.demo.services.ClienteServicio;
-import saulwebavanzada.demo.services.EquipoServicio;
-import saulwebavanzada.demo.services.FacturaServicio;
+import saulwebavanzada.demo.entities.*;
+import saulwebavanzada.demo.services.*;
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/alquiler")
@@ -27,12 +23,24 @@ public class AlquilerControlador {
     @Autowired public ClienteServicio clienteServicio;
     @Autowired public FacturaServicio facturaServicio;
     @Autowired public EquipoServicio equipoServicio;
+    @Autowired public SubFamiliaServicio subFamiliaServicio;
 
     @RequestMapping("")
     public String listarAlquileres(Model model){
         model.addAttribute("listaAlquileres", alquilerServicio.getAlquileres());
         model.addAttribute("listaClientes", clienteServicio.getClientes());
         model.addAttribute("listaEquipos", equipoServicio.getEquipos());
+
+        List<SubFamilia> subFamilias = subFamiliaServicio.getSubFamilias();
+        List<Integer> promedios = new ArrayList<>();
+        for(int i = 0; i < subFamilias.size(); i++){
+            List<Equipo> equipo_subfamilia = equipoServicio.getEquipoBySubFamilia(subFamilias.get(i));
+            promedios.add(alquilerServicio.getPromedioDiasBySubFamilia(equipo_subfamilia));
+        }
+
+        model.addAttribute("subFamilias", subFamilias);
+        model.addAttribute("promediosSubFamilias", promedios);
+
         return "/thymeleaf/rental.html";
     }
 
@@ -76,7 +84,11 @@ public class AlquilerControlador {
 
     @RequestMapping(path = "/eliminar/{id}")
     public String eliminarAlquiler(Model model, @PathVariable(name = "id") long id){
+        Alquiler alquiler = alquilerServicio.getAlquilerById(id);
+        Equipo equipo = equipoServicio.getEquipoById(alquiler.getEquipo().getId());
+        equipo.setExistencia(equipo.getExistencia()+1);
+        equipoServicio.editarEquipo(equipo);
         alquilerServicio.eliminarAlquiler(id);
-        return "redirect:/equipos";
+        return "redirect:/inventario";
     }
 }
