@@ -14,14 +14,16 @@ public class Equipo {
     private SubFamilia miSubFamilia;
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte[] imagen;
+    private String imagen;
+    private String image_properties;
     private int existencia;
 
-    public Equipo(String nombre, float costoAlquiler, SubFamilia miSubFamilia, byte[] imagen, int existencia) {
+    public Equipo(String nombre, float costoAlquiler, SubFamilia miSubFamilia, String imagen, String image_properties, int existencia) {
         this.nombre = nombre;
         this.costoAlquiler = costoAlquiler;
         this.miSubFamilia = miSubFamilia;
         this.imagen = imagen;
+        this.image_properties = image_properties;
         this.existencia = existencia;
     }
 
@@ -52,11 +54,11 @@ public class Equipo {
         this.miSubFamilia = miSubFamilia;
     }
 
-    public byte[] getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(byte[] imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
@@ -70,5 +72,13 @@ public class Equipo {
 
     public long getId() {
         return id;
+    }
+
+    public String getImage_properties() {
+        return image_properties;
+    }
+
+    public void setImage_properties(String image_properties) {
+        this.image_properties = image_properties;
     }
 }

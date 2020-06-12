@@ -43,11 +43,11 @@ public class ClienteControlador {
         }catch(IOException e){
             e.printStackTrace();
         }**/
-        byte[] imagen = Base64.getEncoder().encode(file.getBytes());
+        String imagen = Base64.getEncoder().encodeToString(file.getBytes());
         List<Alquiler> alquiler = new ArrayList<Alquiler>();
 
         byte[] encoded = Base64.getEncoder().encode(file.getBytes());
-        Cliente cliente= new Cliente(nombre, apellido, cedula, alquiler, encoded);
+        Cliente cliente= new Cliente(nombre, apellido, cedula, alquiler, imagen, file.getContentType());
 
         clienteServicio.crearCliente(cliente);
         return "redirect:/clientes";
@@ -58,9 +58,10 @@ public class ClienteControlador {
                                 @RequestParam(name = "nombre") String nombre,
                                    @RequestParam(name = "apellido") String apellido,
                                    @RequestParam(name = "cedula") String cedula,
-                                   @RequestParam(name = "imagen") File file){
+                                   @RequestParam(name = "imagen") MultipartFile file) throws IOException {
         Cliente clienteSearch = clienteServicio.getClienteById(id);
-        Cliente cliente = new Cliente(nombre, apellido, cedula, clienteSearch.getAlquileres(), null);
+        String imagen = Base64.getEncoder().encodeToString(file.getBytes());
+        Cliente cliente = new Cliente(nombre, apellido, cedula, clienteSearch.getAlquileres(), imagen, file.getContentType());
         clienteServicio.editarCliente(cliente, id);
         return "redirect:/clientes";
     }

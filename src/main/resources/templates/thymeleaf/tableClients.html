@@ -280,7 +280,7 @@
                     <td th:text = "${cliente.nombre}"></td>
                     <td th:text = "${cliente.apellido}"></td>
                     <td th:text = "${cliente.cedula}"></td>
-                    <td> <img th:src="@{'data:image/jpg;base64,'+ ${cliente.imagen}}" height=100 width=300 alt="*"></td>
+                    <td> <img th:src="@{'data:'+${cliente.image_properties}+';base64,'+${cliente.imagen}}" height=100 width=100 alt="*"></td>
                     <td>
                         <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${cliente.id} + '-' + ${cliente.nombre} + '-' + ${cliente.apellido} + '-' + ${cliente.cedula} + '-' + ${cliente.imagen}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${cliente.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -303,6 +303,7 @@
         </div>
     </div>
 </div>
+
 <!-- Add Modal HTML -->
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
@@ -343,7 +344,7 @@
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/clientes/editar">
+            <form role="form" method="post" action="/clientes/editar" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Cliente</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

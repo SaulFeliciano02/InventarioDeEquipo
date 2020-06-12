@@ -282,7 +282,7 @@
                     <td th:text = "${equipo.costoAlquiler}"></td>
                     <td th:text = "${equipo.miSubFamilia.nombre}"></td>
                     <td th:text = "${equipo.existencia}"></td>
-                    <td th:text = "${equipo.imagen}"></td>
+                    <td> <img th:src="@{'data:'+${equipo.image_properties}+';base64,'+${equipo.imagen}}" height=100 width=100 alt="*"></td>
                     <td>
                         <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit" th:id="${equipo.id} + '-' + ${equipo.nombre} + '-' + ${equipo.costoAlquiler} + '-' + ${equipo.miSubFamilia.nombre} + '-' + ${equipo.existencia} + '-' + ${equipo.imagen}" onclick="edit_clicked(this.id)">&#xE254;</i></a>
                         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" th:id="${equipo.id}" onclick="delete_clicked(this.id)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -309,7 +309,7 @@
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/inventario/crear">
+            <form role="form" method="post" action="/inventario/crear" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h4 class="modal-title">Añadir Equipo</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -410,7 +410,7 @@
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form role="form" method="post" action="/inventario/editar">
+            <form role="form" method="post" action="/inventario/editar" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Equipo</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

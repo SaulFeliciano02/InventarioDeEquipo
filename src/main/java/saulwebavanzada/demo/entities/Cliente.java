@@ -13,19 +13,21 @@ public class Cliente {
     @Column(length = 2000)
     private String Apellido;
     private String cedula;
+    private String image_properties;
     @OneToMany
     private List<Alquiler> alquileres;
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(nullable = true)
-    private byte[] imagen;
+    private String imagen;
 
-    public Cliente(String nombre, String apellido, String cedula, List<Alquiler> alquileres, byte[] imagen) {
+    public Cliente(String nombre, String apellido, String cedula, List<Alquiler> alquileres, String imagen, String image_properties) {
         this.nombre = nombre;
         Apellido = apellido;
         this.cedula = cedula;
         this.alquileres = alquileres;
         this.imagen = imagen;
+        this.image_properties = image_properties;
     }
 
     public Cliente() {
@@ -55,11 +57,11 @@ public class Cliente {
         this.cedula = cedula;
     }
 
-    public byte[] getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(byte[] imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
 
@@ -77,5 +79,13 @@ public class Cliente {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getImage_properties() {
+        return image_properties;
+    }
+
+    public void setImage_properties(String image_properties) {
+        this.image_properties = image_properties;
     }
 }
