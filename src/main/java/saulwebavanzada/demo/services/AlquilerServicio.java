@@ -3,10 +3,7 @@ package saulwebavanzada.demo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import saulwebavanzada.demo.entities.Alquiler;
-import saulwebavanzada.demo.entities.Equipo;
-import saulwebavanzada.demo.entities.SubFamilia;
-import saulwebavanzada.demo.entities.Usuario;
+import saulwebavanzada.demo.entities.*;
 import saulwebavanzada.demo.repositories.AlquilerRepositorio;
 
 import java.time.LocalDate;
@@ -31,6 +28,10 @@ public class AlquilerServicio {
 
     public List<Alquiler> getAlquilerByEquipo(Equipo equipo){
         return alquilerRepositorio.findAllByEquipo(equipo);
+    }
+
+    public List<Alquiler> getAlquilerByCliente(Cliente cliente){
+        return alquilerRepositorio.findAllByMiCliente(cliente);
     }
 
     public int getPromedioDiasBySubFamilia(List<Equipo> equipos){

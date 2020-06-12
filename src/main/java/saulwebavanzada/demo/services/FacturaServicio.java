@@ -19,6 +19,10 @@ public class FacturaServicio {
         return facturaRepositorio.findAll();
     }
 
+    public List<Factura> getFacturasByAlquiler(Alquiler alquiler){
+        return facturaRepositorio.findAllByAlquiler(alquiler);
+    }
+
     @Transactional
     public boolean crearFactura(Factura factura){
         if(facturaRepositorio.findById(factura.getId()) != null){

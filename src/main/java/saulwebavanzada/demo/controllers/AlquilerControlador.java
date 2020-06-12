@@ -3,9 +3,12 @@ package saulwebavanzada.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import saulwebavanzada.demo.entities.*;
 import saulwebavanzada.demo.services.*;
 
@@ -26,10 +29,13 @@ public class AlquilerControlador {
     @Autowired public SubFamiliaServicio subFamiliaServicio;
 
     @RequestMapping("")
-    public String listarAlquileres(Model model){
+    public String listarAlquileres(Model model, @ModelAttribute("error") String error){
         model.addAttribute("listaAlquileres", alquilerServicio.getAlquileres());
         model.addAttribute("listaClientes", clienteServicio.getClientes());
         model.addAttribute("listaEquipos", equipoServicio.getEquipos());
+        if(!error.equalsIgnoreCase("")){
+            model.addAttribute("error", error);
+        }
 
         List<SubFamilia> subFamilias = subFamiliaServicio.getSubFamilias();
         List<Integer> promedios = new ArrayList<>();
@@ -83,12 +89,18 @@ public class AlquilerControlador {
     }
 
     @RequestMapping(path = "/eliminar/{id}")
-    public String eliminarAlquiler(Model model, @PathVariable(name = "id") long id){
+    public RedirectView eliminarAlquiler(Model model, @PathVariable(name = "id") long id, RedirectAttributes attributes){
         Alquiler alquiler = alquilerServicio.getAlquilerById(id);
-        Equipo equipo = equipoServicio.getEquipoById(alquiler.getEquipo().getId());
-        equipo.setExistencia(equipo.getExistencia()+1);
-        equipoServicio.editarEquipo(equipo);
-        alquilerServicio.eliminarAlquiler(id);
-        return "redirect:/inventario";
+        if(facturaServicio.getFacturasByAlquiler(alquiler).size() > 0){
+            attributes.addFlashAttribute("error", "Alquiler relacionado a factura, no se puede eliminar.");
+        }
+        else{
+            Equipo equipo = equipoServicio.getEquipoById(alquiler.getEquipo().getId());
+            equipo.setExistencia(equipo.getExistencia()+1);
+            equipoServicio.editarEquipo(equipo);
+
+            alquilerServicio.eliminarAlquiler(id);
+        }
+        return new RedirectView("/alquiler");
     }
 }

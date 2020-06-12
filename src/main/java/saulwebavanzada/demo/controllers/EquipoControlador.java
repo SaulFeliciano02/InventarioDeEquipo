@@ -3,13 +3,18 @@ package saulwebavanzada.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import saulwebavanzada.demo.entities.Equipo;
 import saulwebavanzada.demo.entities.SubFamilia;
 import saulwebavanzada.demo.entities.Usuario;
+import saulwebavanzada.demo.repositories.AlquilerRepositorio;
+import saulwebavanzada.demo.services.AlquilerServicio;
 import saulwebavanzada.demo.services.EquipoServicio;
 import saulwebavanzada.demo.services.SubFamiliaServicio;
 
@@ -20,16 +25,17 @@ import java.util.Base64;
 @Controller
 @RequestMapping("/inventario")
 public class EquipoControlador {
-    @Autowired
-    public EquipoServicio equipoServicio;
-
-    @Autowired
-    public SubFamiliaServicio subFamiliaServicio;
+    @Autowired public EquipoServicio equipoServicio;
+    @Autowired public SubFamiliaServicio subFamiliaServicio;
+    @Autowired public AlquilerServicio alquilerServicio;
 
     @RequestMapping("")
-    public String listarEquipos(Model model){
+    public String listarEquipos(Model model, @ModelAttribute("error") String error){
         model.addAttribute("listaSubFamilias", subFamiliaServicio.getSubFamilias());
         model.addAttribute("listaEquipos", equipoServicio.getEquipos());
+        if(!error.equalsIgnoreCase("")){
+            model.addAttribute("error", error);
+        }
         return "/thymeleaf/inventory.html";
     }
 
@@ -60,48 +66,12 @@ public class EquipoControlador {
      }
 
     @RequestMapping(path = "/eliminar/{id}")
-    public String eliminarEquipo(Model model, @PathVariable(name = "id") long id){
+    public RedirectView eliminarEquipo(Model model, @PathVariable(name = "id") long id, RedirectAttributes attributes){
+        Equipo equipo = equipoServicio.getEquipoById(id);
+        if(alquilerServicio.getAlquilerByEquipo(equipo).size() > 0){
+            attributes.addFlashAttribute("error", "Equipo relacionado a Alquiler, no se puede eliminar.");
+        }
         equipoServicio.eliminarEquipo(id);
-        return "redirect:/inventario";
+        return new RedirectView("/inventario");
     }
-
-//    @RequestMapping(path = "/")
-//    public String login(){
-//        return "/thymeleaf/index";
-//    }
-//
-//    @RequestMapping(path = "/home")
-//    public String home(){
-//        return "/thymeleaf/home";
-//    }
-//
-//    @RequestMapping(path = "/usuarios")
-//    public String listarUsuarios(){
-//        return "/thymeleaf/users";
-//    }
-//
-//    @RequestMapping(path = "/inventario")
-//    public String listarEquipos(){
-//        return "/thymeleaf/inventory";
-//    }
-//
-//    @RequestMapping(path = "/clientes")
-//    public String listarClientes(){
-//        return "/thymeleaf/clients";
-//    }
-//
-//    @RequestMapping(path = "/alquiler")
-//    public String listarAlquiler(){
-//        return "/thymeleaf/rental";
-//    }
-//
-//    @RequestMapping(path = "/facturas")
-//    public String listarFacturas(){
-//        return "/thymeleaf/invoices";
-//    }
-//
-//    @RequestMapping(path = "/familias")
-//    public String listarFamilias(){
-//        return "/thymeleaf/familyAndSub";
-//    }
 }
