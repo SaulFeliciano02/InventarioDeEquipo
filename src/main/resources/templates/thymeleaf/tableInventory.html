@@ -327,7 +327,7 @@
                     <div class="form-group">
                         <label>Sub-Familia
                             <select name="subFamilia" required>
-                                <option>-Elegir Sub-Familia-</option>
+                                <option th:text = "${listaSubFamilias[0].nombre} ?: 'Selecciona una SubFamilia'">-</option>
                                 <th:block th:each="subFamilia : ${listaSubFamilias}">
                                     <option th:text = "${subFamilia.nombre}"></option>
                                 </th:block>
@@ -368,8 +368,11 @@
                     </div>
                     <div class="form-group">
                         <label>Familia
-                            <select required>
-                                <option>-Selecciona una Familia-</option>
+                            <select name="familia" required>
+                                <option th:text = "${listaFamilias[0].id}  + '-' + ${listaFamilias[0].nombre}?: '-Seleccione una familia-'"></option>
+                                <th:block th:each="familia : ${listaFamilias}">
+                                    <option th:text = "${familia.id} + '-' + ${familia.nombre}"></option>
+                                </th:block>
                             </select>
                         </label>
                     </div>

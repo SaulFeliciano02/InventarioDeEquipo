@@ -314,7 +314,7 @@
                     <div class="form-group">
                         <label>Familia
                             <select name="familia" required>
-                                <option>Selecciona una familia</option>
+                                <option th:text = "${listaFamilias[0].id} + '-' + ${listaFamilias[0].nombre} ?: '-Seleccione una familia-'"></option>
                                 <th:block th:each="familia : ${listaFamilias}">
                                     <option th:text = "${familia.id} + '-' + ${familia.nombre}"></option>
                                 </th:block>
@@ -351,7 +351,7 @@
                     <div class="form-group">
                         <label>Familia
                             <select name="familia" id="familiaEdit" required>
-                                <option>Selecciona una familia</option>
+                                <option th:text = "${listaFamilias[0]}"></option>
                                 <th:block th:each="familia : ${listaFamilias}">
                                     <option th:text = "${familia.id} + '-' + ${familia.nombre}"></option>
                                 </th:block>

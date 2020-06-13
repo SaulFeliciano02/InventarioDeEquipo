@@ -11,11 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import saulwebavanzada.demo.entities.Equipo;
+import saulwebavanzada.demo.entities.Familia;
 import saulwebavanzada.demo.entities.SubFamilia;
 import saulwebavanzada.demo.entities.Usuario;
 import saulwebavanzada.demo.repositories.AlquilerRepositorio;
 import saulwebavanzada.demo.services.AlquilerServicio;
 import saulwebavanzada.demo.services.EquipoServicio;
+import saulwebavanzada.demo.services.FamiliaServicio;
 import saulwebavanzada.demo.services.SubFamiliaServicio;
 
 import java.io.File;
@@ -28,11 +30,13 @@ public class EquipoControlador {
     @Autowired public EquipoServicio equipoServicio;
     @Autowired public SubFamiliaServicio subFamiliaServicio;
     @Autowired public AlquilerServicio alquilerServicio;
+    @Autowired public FamiliaServicio familiaServicio;
 
     @RequestMapping("")
     public String listarEquipos(Model model, @ModelAttribute("error") String error){
         model.addAttribute("listaSubFamilias", subFamiliaServicio.getSubFamilias());
         model.addAttribute("listaEquipos", equipoServicio.getEquipos());
+        model.addAttribute("listaFamilias", familiaServicio.getFamilias());
         if(!error.equalsIgnoreCase("")){
             model.addAttribute("error", error);
         }
@@ -73,5 +77,21 @@ public class EquipoControlador {
         }
         equipoServicio.eliminarEquipo(id);
         return new RedirectView("/inventario");
+    }
+
+    @RequestMapping(path = "/crearFamilia")
+    public String crearFamilia(@RequestParam(name = "nombre") String nombre){
+        Familia familia = new Familia(nombre);
+        familiaServicio.crearFamilia(familia);
+        return "redirect:/inventario";
+    }
+
+    @RequestMapping(path = "/crearSubFamilia")
+    public String crearSubFamilia(@RequestParam(name = "nombre") String nombre,
+                                  @RequestParam(name = "familia") String familiaInfo){
+        Familia familia = familiaServicio.getFamiliaById(Long.parseLong(familiaInfo.split("-")[0]));
+        SubFamilia subFamilia = new SubFamilia(nombre, familia);
+        subFamiliaServicio.crearSubFamilia(subFamilia);
+        return "redirect:/inventario";
     }
 }

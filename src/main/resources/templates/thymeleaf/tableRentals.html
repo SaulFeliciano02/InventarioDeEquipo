@@ -324,7 +324,7 @@
                     <div class="form-group">
                         <label>Equipo</label>
                         <select name="equipo" required>
-                            <option>-Elegir Equipo-</option>
+                            <option th:text = "${listaEquipos[0].id} + '-' + ${listaEquipos[0].nombre} ?: '-Seleccione un equipo-'"></option>
                             <th:block th:each="equipo : ${listaEquipos}">
                                 <option th:text = "${equipo.id} + '-' + ${equipo.nombre}"></option>
                             </th:block>
@@ -341,7 +341,7 @@
                     <div class="form-group">
                         <label>Cliente
                             <select name="cliente" required>
-                                <option>-Elegir Cliente-</option>
+                                <option th:text = "${listaClientes[0].id} + '-' + ${listaClientes[0].nombre} + ' ' + ${listaClientes[0].apellido} ?: '-Seleccione un equipo-'"></option>
                                 <th:block th:each="cliente : ${listaClientes}">
                                     <option th:text = "${cliente.id} + '-' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></option>
                                 </th:block>
